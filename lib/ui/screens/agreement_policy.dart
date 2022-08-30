@@ -31,7 +31,7 @@ class _AgreementPolicyScreenState extends State<AgreementPolicyScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text("AgreementPolicyScreen",
+                const Text("Agreement Policy Screen",
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(

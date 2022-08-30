@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../ui/screens/on_boarding_screen.dart';
+import '../ui/screens/on_boarding.dart';
 
 class SplashScreenController extends GetxController {
   @override

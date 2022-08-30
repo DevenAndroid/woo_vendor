@@ -129,7 +129,7 @@ class _ChangeLocationScreenState extends State<ChangeLocationScreen> {
                                     height: 5,
                                   ),
                                   CustomTextField(
-                                    controller: _cityController,
+                                    controller: _DistrictController,
                                     prefixChildIcon: const Icon(
                                       Icons.location_on_outlined,
                                       color: AppTheme.orangeColor,
@@ -158,7 +158,7 @@ class _ChangeLocationScreenState extends State<ChangeLocationScreen> {
                                     height: 5,
                                   ),
                                   CustomTextField(
-                                    controller: _cityController,
+                                    controller: _addressController,
                                     prefixChildIcon: const Icon(
                                       Icons.location_on_outlined,
                                       color: AppTheme.orangeColor,

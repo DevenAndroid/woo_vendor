@@ -1,15 +1,27 @@
 import 'package:get/get.dart';
+import 'package:woo_vendor/ui/screens/help.dart';
 
 import '../../../splash_screen.dart';
+import '../Notifications.dart';
 import '../Verification.dart';
+import '../account_detail.dart';
 import '../agreement_policy.dart';
 import '../change_location.dart';
-import '../create_restaurant_screen.dart';
+import '../chat.dart';
+import '../create_restaurant.dart';
+import '../add_item.dart';
+import '../food_licence.dart';
+import '../gst_details.dart';
 import '../home_screen.dart';
-import '../log_in_screen.dart';
+import '../log_in.dart';
+import '../offer.dart';
+import '../order.dart';
 import '../otp_screen.dart';
+import '../owner_details.dart';
+import '../profile.dart';
+import '../restaurant_details.dart';
 import '../restaurant_location.dart';
-import '../sign_up_screen.dart';
+import '../sign_up.dart';
 
 class MyRoutes {
   static const String loginScreen = "/loginScreen";
@@ -21,9 +33,21 @@ class MyRoutes {
   static const String homeScreen = "/homeScreen";
   static const String restaurantLocationScreen = "/restaurantLocationScreen";
   static const String changeLocationScreen = "/changeLocationScreen";
+  static const String profileScreen = "/profileScreen";
+  static const String notificationScreen = "/notificationScreen";
+  static const String restaurantDetailScreen = "/restaurantDetailScreen";
+  static const String ownerDetailScreen = "/ownerDetailScreen";
+  static const String accountDetailScreen = "/accountDetailScreen";
+  static const String foodLicenceScreen = "/foodLicenceScreen";
+  static const String gstDetailScreen = "/gstDetailScreen";
+  static const String helpScreen = "/helpScreen";
+  static const String addItemScreen = "/addItemScreen";
+  static const String orderScreen = "/orderScreen";
+  static const String chatScreen = "/chatScreen";
+  static const String offerScreen = "/offerScreen";
 
   static var routes = [
-    GetPage(name: "/", page: () => const ChangeLocationScreen()),
+    GetPage(name: "/", page: () => const OfferScreen()),
     GetPage(name: loginScreen, page: () => const LogInScreen()),
     GetPage(name: getOTPScreen, page: () => const OtpScreen()),
     GetPage(name: signUpScreen, page: () => const SignUpScreen()),
@@ -33,5 +57,17 @@ class MyRoutes {
     GetPage(name: homeScreen, page: () => const HomeScreen()),
     GetPage(name: restaurantLocationScreen, page: () => const RestaurantLocationScreen()),
     GetPage(name: changeLocationScreen, page: () => const ChangeLocationScreen()),
+    GetPage(name: profileScreen, page: () => const ProfileScreen()),
+    GetPage(name: notificationScreen, page: () => const NotificationScreen()),
+    GetPage(name: restaurantDetailScreen, page: () => const RestaurantDetailScreen()),
+    GetPage(name: ownerDetailScreen, page: () => const OwnerDetailScreen()),
+    GetPage(name: accountDetailScreen, page: () => const AccountDetailScreen()),
+    GetPage(name: foodLicenceScreen, page: () => const FoodLicenceScreen()),
+    GetPage(name: gstDetailScreen, page: () => const GSTDetailScreen()),
+    GetPage(name: helpScreen, page: () => const HelpScreen()),
+    GetPage(name: addItemScreen, page: () => const AddItemScreen()),
+    GetPage(name: orderScreen, page: () => const OrderScreen()),
+    GetPage(name: chatScreen, page: () => const ChatScreen()),
+    GetPage(name: offerScreen, page: () => const OfferScreen()),
   ];
 }

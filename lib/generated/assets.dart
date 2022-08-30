@@ -7,12 +7,23 @@ class Assets {
   static const String imagesAdd = 'assets/images/add.png';
   static const String imagesAgreementPolicy = 'assets/images/agreement_policy.png';
   static const String imagesBurger = 'assets/images/burger.png';
+  static const String imagesCall = 'assets/images/call.png';
+  static const String imagesClipboardText = 'assets/images/clipboard_text.png';
+  static const String imagesCoin = 'assets/images/coin.png';
+  static const String imagesEdit = 'assets/images/edit.png';
+  static const String imagesEdit2 = 'assets/images/edit2.png';
   static const String imagesFb = 'assets/images/fb.png';
   static const String imagesGoogle = 'assets/images/google.png';
+  static const String imagesGst = 'assets/images/gst.png';
   static const String imagesId = 'assets/images/id.png';
+  static const String imagesMoney = 'assets/images/money.png';
   static const String imagesOnBoardingScreen1 = 'assets/images/on_boarding_screen1.png';
   static const String imagesOnBoardingScreen2 = 'assets/images/on_boarding_screen2.png';
   static const String imagesOnBoardingScreen3 = 'assets/images/on_boarding_screen3.png';
+  static const String imagesPercent = 'assets/images/percent.png';
+  static const String imagesSend = 'assets/images/send.png';
+  static const String imagesSliderImage = 'assets/images/slider_image.png';
   static const String imagesUser1 = 'assets/images/user1.png';
+  static const String imagesVideo = 'assets/images/video.png';
 
 }
