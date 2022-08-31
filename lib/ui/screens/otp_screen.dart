@@ -128,6 +128,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         height: 30,
                       ),
                       CustomButton(
+                          height: 40,
                           primaryColor: AppTheme.orangeColor,
                           buttonTextColor: AppTheme.whiteColor,
                           buttonText: "Verify & Proceed",

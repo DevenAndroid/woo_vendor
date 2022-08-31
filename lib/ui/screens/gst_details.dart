@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
+import 'app_routes/app_routes.dart';
 
 class GSTDetailScreen extends StatefulWidget {
   const GSTDetailScreen({Key? key}) : super(key: key);
@@ -63,11 +65,12 @@ class _GSTDetailScreenState extends State<GSTDetailScreen> {
                     height: 150,
                   ),
                   CustomButton(
-                    buttonText: "  Submit  ",
+                    height: 40,
+                    width: 120,
+                    buttonText: "Submit",
                     buttonTextColor: AppTheme.whiteColor,
                     primaryColor: AppTheme.orangeColor,
-                    onPress: () {},
-                  )
+                    onPress: ()=> Get.toNamed(MyRoutes.profileScreen),)
                 ],
               )),
         ));

@@ -1,8 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
+import '../widgets/custom_button.dart';
+import '../widgets/custom_text_field.dart';
+import 'app_routes/app_routes.dart';
 
 class HelpScreen extends StatefulWidget {
   const HelpScreen({Key? key}) : super(key: key);
@@ -12,12 +15,14 @@ class HelpScreen extends StatefulWidget {
 }
 
 class _HelpScreenState extends State<HelpScreen> {
+  final _dataController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
             preferredSize:
-            Size.fromHeight(MediaQuery.of(context).size.height * .11),
+                Size.fromHeight(MediaQuery.of(context).size.height * .11),
             child: const CustomAppbar(
               data: 'Help',
               leading: Icon(Icons.arrow_back_ios),
@@ -42,29 +47,32 @@ class _HelpScreenState extends State<HelpScreen> {
                           spreadRadius: 2,
                           blurRadius: 4,
                           offset:
-                          const Offset(0, 3), // changes position of shadow
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
-                  //   child: Column(
-                  //     children: <Widget>[
-                  //       CustomTextField(
-                  //           controller: _numberController,
-                  //           hintText: "GST NO",
-                  //           prefixChildIcon:
-                  //           Image.asset("assets/images/percent.png")),
-                  //     ],
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   height: 150,
-                  // ),
-                  // CustomButton(
-                  //   buttonText: "  Submit  ",
-                  //   buttonTextColor: AppTheme.whiteColor,
-                  //   primaryColor: AppTheme.orangeColor,
-                  //   onPress: () {},
-                  )
+                    child: Column(
+                      children: <Widget>[
+                        CustomTextField(
+                            controller: _dataController,
+                            hintText: "Type something..",
+                            prefixChildIcon: const Icon(
+                              Icons.help_outline,
+                              color: AppTheme.orangeColor,
+                            )),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 150,
+                  ),
+                  CustomButton(
+                    height: 40,
+                    width: 120,
+                    buttonText: "Submit",
+                    buttonTextColor: AppTheme.whiteColor,
+                    primaryColor: AppTheme.orangeColor,
+                    onPress: ()=> Get.toNamed(MyRoutes.profileScreen),)
                 ],
               )),
         ));

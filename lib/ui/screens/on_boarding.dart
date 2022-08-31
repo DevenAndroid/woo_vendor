@@ -179,6 +179,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     height: MediaQuery.of(context).size.height * .1,
                   ),
                   CustomButton(
+                    width: 120,
+                    height: 40,
                     primaryColor: AppTheme.orangeColor,
                     buttonTextColor: AppTheme.whiteColor,
                     buttonText: "Next",

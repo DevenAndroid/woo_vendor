@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
+import 'app_routes/app_routes.dart';
 
 class AccountDetailScreen extends StatefulWidget {
   const AccountDetailScreen({Key? key}) : super(key: key);
@@ -115,11 +117,12 @@ class _AccountDetailScreenState extends State<AccountDetailScreen> {
                     height: 150,
                   ),
                   CustomButton(
-                    buttonText: "  Submit  ",
+                    height: 40,
+                    width: 120,
+                    buttonText: "Submit",
                     buttonTextColor: AppTheme.whiteColor,
                     primaryColor: AppTheme.orangeColor,
-                    onPress: () {},
-                  )
+                    onPress: ()=> Get.toNamed(MyRoutes.profileScreen),)
                 ],
               )),
         ));

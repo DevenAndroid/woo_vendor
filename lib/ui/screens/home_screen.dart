@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:woo_vendor/ui/widgets/custom_button.dart';
 
 import '../../resources/theme/theme.dart';
+import 'app_routes/app_routes.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,6 +26,16 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Container(
               margin: const EdgeInsets.only(bottom: 30),
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    spreadRadius: 2,
+                    blurRadius: 4,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
               child: SizedBox(
                 height: MediaQuery.of(context).size.height * .15,
                 child: AppBar(
@@ -51,10 +63,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: AppTheme.whiteColor,
                         fontSize: 20),
                   ),
-                  actions: const [
+                  actions: [
                     Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(Icons.notifications),
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                          onTap: () => Get.toNamed(MyRoutes.notificationScreen),
+                          child: const Icon(Icons.notifications_outlined)),
                     )
                   ],
                 ),
@@ -94,6 +108,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       focusColor: AppTheme.whiteColor,
                       isCollapsed: false,
                       hoverColor: AppTheme.whiteColor,
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              const BorderSide(color: AppTheme.whiteColor)),
+                      disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide:
+                              const BorderSide(color: AppTheme.whiteColor)),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                           borderSide:
@@ -268,7 +290,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               primaryColor: AppTheme.orangeColor,
                               buttonTextColor: AppTheme.whiteColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             CustomButton(
@@ -748,157 +770,90 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        height: MediaQuery.of(context).size.height * .12,
-                        width: MediaQuery.of(context).size.width * .45,
-                        margin: const EdgeInsets.only(bottom: 10),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: AppTheme.whiteColor,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 4,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .12,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemCount: 10,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * .12,
+                            width: MediaQuery.of(context).size.width * .45,
+                            margin:
+                                const EdgeInsets.only(bottom: 10, right: 20),
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppTheme.whiteColor,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.2),
+                                  spreadRadius: 2,
+                                  blurRadius: 4,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height * .1,
-                              width: MediaQuery.of(context).size.width * .2,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: const DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          "https://images.unsplash.com/photo-1565060299509-453c4f3bc905?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=386&q=80"))),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  "Noodles",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppTheme.orangeColor),
+                            child: Row(
+                              children: [
+                                Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * .1,
+                                  width: MediaQuery.of(context).size.width * .2,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.white,
+                                        width: 1,
+                                      ),
+                                      borderRadius: BorderRadius.circular(12),
+                                      image: const DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(
+                                              "https://images.unsplash.com/photo-1565060299509-453c4f3bc905?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=386&q=80"))),
                                 ),
-                                SizedBox(
-                                  height: 5,
+                                const SizedBox(
+                                  width: 10,
                                 ),
-                                Text(
-                                  "2 bowl",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "\$25",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppTheme.orangeColor),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      "Noodles",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppTheme.orangeColor),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      "2 bowl",
+                                      style: TextStyle(fontSize: 14),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      "\$25",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                          color: AppTheme.orangeColor),
+                                    )
+                                  ],
                                 )
                               ],
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height * .12,
-                        width: MediaQuery.of(context).size.width * .45,
-                        margin: const EdgeInsets.only(bottom: 10),
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: AppTheme.whiteColor,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 2,
-                              blurRadius: 4,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
                             ),
-                          ],
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height * .1,
-                              width: MediaQuery.of(context).size.width * .2,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.white,
-                                    width: 1,
-                                  ),
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: const DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          "https://images.unsplash.com/photo-1565060299509-453c4f3bc905?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=386&q=80"))),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const [
-                                Text(
-                                  "Noodles",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppTheme.orangeColor),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "2 bowl",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "\$25",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppTheme.orangeColor),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  )
+                          );
+                        }),
+                  ),
                 ],
               ),
             ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:woo_vendor/ui/widgets/custom_text_field.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
+import 'app_routes/app_routes.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -21,9 +23,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(MediaQuery.of(context).size.height * .11),
-            child: const CustomAppbar(
+            child:  CustomAppbar(
               data: 'Profile',
-              leading: Icon(Icons.arrow_back_ios),
+              leading: InkWell(
+                onTap: ()=> Get.toNamed(MyRoutes.bottomNavBarScreen),
+                  child: Icon(Icons.arrow_back_ios)),
             )),
         body: SingleChildScrollView(
           child: Padding(
@@ -31,7 +35,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () =>Get.toNamed(MyRoutes.restaurantDetailScreen),
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     width: MediaQuery.of(context).size.width,
@@ -87,7 +91,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 10,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: ()  =>Get.toNamed(MyRoutes.ownerDetailScreen),
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     width: MediaQuery.of(context).size.width,
@@ -142,7 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 10,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: ()  =>Get.toNamed(MyRoutes.accountDetailScreen),
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     width: MediaQuery.of(context).size.width,
@@ -200,7 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 10,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () =>Get.toNamed(MyRoutes.foodLicenceScreen),
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     width: MediaQuery.of(context).size.width,
@@ -257,7 +261,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 10,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () =>Get.toNamed(MyRoutes.gstDetailScreen),
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     width: MediaQuery.of(context).size.width,
@@ -312,7 +316,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 10,
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () =>Get.toNamed(MyRoutes.helpScreen),
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     width: MediaQuery.of(context).size.width,

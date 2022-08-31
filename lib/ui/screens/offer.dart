@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:woo_vendor/resources/theme/theme.dart';
 
 import '../widgets/custom_appbar.dart';
@@ -13,7 +14,15 @@ class OfferScreen extends StatefulWidget {
 }
 
 class _OfferScreenState extends State<OfferScreen> {
-  var items = [1, 2, 3];
+  var items = [
+    "https://img.freepik.com/free-photo/sambar-rice-sambar-sadam-one-pot-meal-from-south-indian-state-tamil-nadu-kerala_466689-75220.jpg?w=740&t=st=1661928577~exp=1661929177~hmac=9fa362e70586ca687ae6f821aecee0d2eff6263f24c259b738a7f490a4298a75",
+    "https://img.freepik.com/free-photo/sambar-rice-sambar-sadam-one-pot-meal-from-south-indian-state-tamil-nadu-kerala_466689-75220.jpg?w=740&t=st=1661928577~exp=1661929177~hmac=9fa362e70586ca687ae6f821aecee0d2eff6263f24c259b738a7f490a4298a75",
+    "https://img.freepik.com/free-photo/sambar-rice-sambar-sadam-one-pot-meal-from-south-indian-state-tamil-nadu-kerala_466689-75220.jpg?w=740&t=st=1661928577~exp=1661929177~hmac=9fa362e70586ca687ae6f821aecee0d2eff6263f24c259b738a7f490a4298a75",
+
+
+  ];
+
+  RxInt currentIndex = 0.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,7 @@ class _OfferScreenState extends State<OfferScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "Today's offer",
                           style: TextStyle(
                               fontSize: 20,
@@ -52,49 +61,44 @@ class _OfferScreenState extends State<OfferScreen> {
                     ),
                   ],
                 ),
-
                 CarouselSlider(
                   options: CarouselOptions(
-                    viewportFraction: 1,
-                    autoPlay: true,
-                    height: MediaQuery.of(context).size.height * .3,
-                  ),
-                  items: [
-                    1,
-                    2,
-                    3,
-                  ].map((i) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          height: MediaQuery.of(context).size.height * .13,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                            image: AssetImage(
-                              "assets/images/slider_image.png",
-                            ),
-                            fit: BoxFit.cover,
+                      viewportFraction: 1,
+                      autoPlay: true,
+                      height: MediaQuery.of(context).size.height * .25,
+                      onPageChanged: (value, value1) {
+                        currentIndex.value = value;
+                        // setState((){});
+                        print(value);
+                      }),
+                  items: List.generate(
+                      items.length,
+                      (index) => Container(
+                            height: MediaQuery.of(context).size.height * .13,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                              image: NetworkImage(items[index].toString()),
+                              fit: BoxFit.cover,
+                            )),
                           )),
-                        );
-                      },
-                    );
-                  }).toList(),
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                //   DotsIndicator(
-                //     dotsCount: 3,
-                //     position: items.length,
-                //     decorator: DotsDecorator(
-                //       color: Color(0xffFFF2ED), // Inactive color
-                //       activeColor: AppTheme.orangeColor,
-                //     ),
-                //   );
-                //   const SizedBox(
-                //   height: 20,
-                // ),
+                Obx(() {
+                  return DotsIndicator(
+                    dotsCount: items.length,
+                    position: currentIndex.value.toDouble(),
+                    decorator: const DotsDecorator(
+                      color: Color(0xffFFF2ED), // Inactive color
+                      activeColor: AppTheme.orangeColor,
+                    ),
+                  );
+                }),
+                const SizedBox(
+                  height: 20,
+                ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   width: MediaQuery.of(context).size.width,
@@ -178,7 +182,7 @@ class _OfferScreenState extends State<OfferScreen> {
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 5,
                 ),
                 Container(
                   margin: const EdgeInsets.only(bottom: 10),

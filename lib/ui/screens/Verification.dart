@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:woo_vendor/ui/screens/app_routes/app_routes.dart';
 import 'package:woo_vendor/ui/widgets/custom_button.dart';
 import 'package:woo_vendor/ui/widgets/custom_container.dart';
 import 'package:woo_vendor/ui/widgets/custom_text_field.dart';
@@ -362,10 +364,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               height: 20,
                             ),
                             CustomButton(
+                              height: 40,
+                              width: 110,
                               primaryColor: AppTheme.orangeColor,
                               buttonTextColor: AppTheme.whiteColor,
                               buttonText: "Submit",
-                              onPress: (){},
+                              onPress: (){
+                                Get.toNamed(MyRoutes.agreementPolicyScreen);
+                              },
                             )
                           ]),
                         ),

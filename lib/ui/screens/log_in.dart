@@ -189,6 +189,8 @@ class _LogInScreenState extends State<LogInScreen> {
                         height: 30,
                       ),
                       CustomButton(
+                        height: 40,
+                        width: 100,
                           primaryColor: AppTheme.orangeColor,
                           buttonTextColor: AppTheme.whiteColor,
                           buttonText: "Got OTP",

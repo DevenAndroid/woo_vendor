@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:woo_vendor/ui/widgets/custom_text_field.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
+import 'app_routes/app_routes.dart';
 
 class RestaurantDetailScreen extends StatefulWidget {
   const RestaurantDetailScreen({Key? key}) : super(key: key);
@@ -102,12 +104,12 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                     height: 150,
                   ),
                   CustomButton(
-
-                    buttonText: "  Submit  ",
+                    height: 40,
+                    width: 120,
+                    buttonText: "Submit",
                     buttonTextColor: AppTheme.whiteColor,
                     primaryColor: AppTheme.orangeColor,
-                    onPress: (){},
-                  )
+                    onPress: ()=> Get.toNamed(MyRoutes.profileScreen),)
                 ],
               )),
         ));

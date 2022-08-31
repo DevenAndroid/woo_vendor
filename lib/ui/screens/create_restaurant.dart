@@ -388,6 +388,8 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                           height: 20,
                         ),
                         CustomButton(
+                          height: 40,
+                            width: 110,
                             primaryColor: AppTheme.orangeColor,
                             buttonTextColor: AppTheme.whiteColor,
                             buttonText: "Continue", onPress:(){

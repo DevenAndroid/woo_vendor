@@ -242,8 +242,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
 
                       CustomButton(
-                        height: 50,
-                        width: 150,
+                        height: 40,
+                        width: 120,
                         primaryColor: AppTheme.orangeColor,
                         buttonTextColor: AppTheme.whiteColor,
                         buttonText: "Got OTP",

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:woo_vendor/resources/theme/theme.dart';
 import 'package:woo_vendor/ui/widgets/custom_appbar.dart';
 
 import '../widgets/custom_button.dart';
+import 'app_routes/app_routes.dart';
 
 class AgreementPolicyScreen extends StatefulWidget {
   const AgreementPolicyScreen({Key? key}) : super(key: key);
@@ -95,11 +98,13 @@ class _AgreementPolicyScreenState extends State<AgreementPolicyScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: CustomButton(
-                    height: 50,
-                    width: 150,
+                    primaryColor: AppTheme.orangeColor,
+                    buttonTextColor: AppTheme.whiteColor,
+                    height: 40,
+                    width: 110,
                     buttonText: " Continue ",
                     onPress: () {
-                      // Get.toNamed(MyRoutes.chooseVehicleScreen);
+                      Get.toNamed(MyRoutes.bottomNavBarScreen);
                     },
                   ),
                 ),

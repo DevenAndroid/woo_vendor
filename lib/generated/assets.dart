@@ -4,25 +4,36 @@ class Assets {
 
   static const String fontsLato-Regular = 'assets/fonts/Lato-Regular.ttf';
   static const String fontsLato-Semibold = 'assets/fonts/Lato-Semibold.ttf';
+  static const String fontsMyFlutterApp = 'assets/fonts/MyFlutterApp.ttf';
   static const String imagesAdd = 'assets/images/add.png';
   static const String imagesAgreementPolicy = 'assets/images/agreement_policy.png';
   static const String imagesBurger = 'assets/images/burger.png';
   static const String imagesCall = 'assets/images/call.png';
   static const String imagesClipboardText = 'assets/images/clipboard_text.png';
   static const String imagesCoin = 'assets/images/coin.png';
+  static const String imagesDiscountDark = 'assets/images/discount_dark.png';
+  static const String imagesDiscountLite = 'assets/images/discount_lite.png';
   static const String imagesEdit = 'assets/images/edit.png';
   static const String imagesEdit2 = 'assets/images/edit2.png';
   static const String imagesFb = 'assets/images/fb.png';
   static const String imagesGoogle = 'assets/images/google.png';
   static const String imagesGst = 'assets/images/gst.png';
+  static const String imagesHistoryDark = 'assets/images/history_dark.png';
+  static const String imagesHistoryLite = 'assets/images/history_lite.png';
+  static const String imagesHomeDark = 'assets/images/home_dark.png';
+  static const String imagesHomeLite = 'assets/images/home_lite.png';
   static const String imagesId = 'assets/images/id.png';
+  static const String imagesMenuDark = 'assets/images/menu_dark.png';
+  static const String imagesMenuLite = 'assets/images/menu_lite.png';
   static const String imagesMoney = 'assets/images/money.png';
   static const String imagesOnBoardingScreen1 = 'assets/images/on_boarding_screen1.png';
   static const String imagesOnBoardingScreen2 = 'assets/images/on_boarding_screen2.png';
   static const String imagesOnBoardingScreen3 = 'assets/images/on_boarding_screen3.png';
   static const String imagesPercent = 'assets/images/percent.png';
+  static const String imagesPlus = 'assets/images/plus.png';
   static const String imagesSend = 'assets/images/send.png';
   static const String imagesSliderImage = 'assets/images/slider_image.png';
+  static const String imagesUpload = 'assets/images/upload.png';
   static const String imagesUser1 = 'assets/images/user1.png';
   static const String imagesVideo = 'assets/images/video.png';
 
