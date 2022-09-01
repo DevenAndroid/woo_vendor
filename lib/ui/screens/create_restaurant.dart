@@ -60,7 +60,7 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
   File? uploadDocumentDisplay;
   String? sendingDocumentInAPI;
 
-   void uploadDocumentFunction() async {
+   void  uploadDocumentFunction() async {
     try {
       setState(() {
         uploadDocumentLoading = true;
