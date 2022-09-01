@@ -14,6 +14,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  RxBool order = true.obs;
+  RxBool revenue = true.obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         Brightness.light, // For iOS (dark icons)
                   ),
                   backgroundColor: AppTheme.orangeColor,
-                  leading: const Icon(Icons.menu),
+                  leading: InkWell(
+                      onTap: () => Get.toNamed(MyRoutes.profileScreen),
+                      child: const Icon(Icons.menu)),
                   title: const Text(
                     "Home",
                     style: TextStyle(
@@ -170,6 +175,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Expanded(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Row(
                                     mainAxisAlignment:
@@ -285,7 +292,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CustomButton(
-                              onPress: () {},
+                              onPress: () {
+                                Get.toNamed(MyRoutes.chatScreen);
+                              },
                               buttonText: "Accept",
                               primaryColor: AppTheme.orangeColor,
                               buttonTextColor: AppTheme.whiteColor,
@@ -305,29 +314,108 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
-                  Row(
-                    children: const [
-                      Text(
-                        "All Order",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Cancelled order ",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: AppTheme.textColor),
-                      )
-                    ],
-                  ),
+                  Obx(() {
+                    return SizedBox(
+                      child: order.value == true
+                          ? Row(
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () => order.value = true,
+                                      child: const Text(
+                                        "All Order",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    const SizedBox(
+                                      width: 30,
+                                      child: Divider(
+                                        height: 2,
+                                        thickness: 3,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    order.value = false;
+                                  },
+                                  child: const Text(
+                                    "Cancelled order ",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppTheme.textColor),
+                                  ),
+                                )
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                InkWell(
+                                  onTap: () => order.value = true,
+                                  child: const Text(
+                                    "All Order",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppTheme.textColor),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        order.value = false;
+                                        print(order);
+                                      },
+                                      child: const Text(
+                                        "Cancelled order ",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    const SizedBox(
+                                      width: 30,
+                                      child: Divider(
+                                        height: 2,
+                                        thickness: 3,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                    );
+                  }),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 10),
@@ -729,52 +817,112 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            "Today Revenue",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          SizedBox(
-                            width: 30,
-                            child: Divider(
-                              height: 2,
-                              thickness: 3,
-                              color: Colors.grey,
+                  Obx(() {
+                    return SizedBox(
+                      child: revenue.value == true
+                          ? Row(
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () => revenue.value = true,
+                                      child: const Text(
+                                        "Today Revenue",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    const SizedBox(
+                                      width: 30,
+                                      child: Divider(
+                                        height: 2,
+                                        thickness: 3,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    revenue.value = false;
+                                  },
+                                  child: const Text(
+                                    "Yesterday Revenue",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppTheme.textColor),
+                                  ),
+                                )
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                InkWell(
+                                  onTap: () => revenue.value = true,
+                                  child: const Text(
+                                    "Today Revenue",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppTheme.textColor),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        revenue.value = false;
+                                        print(order);
+                                      },
+                                      child: const Text(
+                                        "Yesterday Revenue",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    const SizedBox(
+                                      width: 30,
+                                      child: Divider(
+                                        height: 2,
+                                        thickness: 3,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const Text(
-                        "Yesterday Revenue",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: AppTheme.textColor),
-                      )
-                    ],
-                  ),
+                    );
+                  }),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * .12,
                     child: ListView.builder(
                         shrinkWrap: true,
-                        physics: AlwaysScrollableScrollPhysics(),
+                        physics: const AlwaysScrollableScrollPhysics(),
                         itemCount: 10,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {

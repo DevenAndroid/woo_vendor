@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 import 'package:woo_vendor/icons.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
+import 'app_routes/app_routes.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -19,9 +21,12 @@ class _MenuScreenState extends State<MenuScreen> {
       appBar: PreferredSize(
           preferredSize:
               Size.fromHeight(MediaQuery.of(context).size.height * .11),
-          child: const CustomAppbar(
+          child:  CustomAppbar(
             data: 'Menu',
-            leading: Icon(Icons.arrow_back_ios),
+            leading: InkWell(
+                onTap: ()=> Get.toNamed(MyRoutes.profileScreen),
+                child: Icon(Icons.menu)),
+
           )),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -107,7 +112,7 @@ class _MenuScreenState extends State<MenuScreen> {
                   children: [
                     ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: 10,
                       itemBuilder: (BuildContext context, int index) {
                         return Slidable(
@@ -119,8 +124,10 @@ class _MenuScreenState extends State<MenuScreen> {
                             motion: const ScrollMotion(),
                             children: [
                               SlidableAction(
-                                onPressed: (value) {},
-                                backgroundColor: Color(0xFFFFF2ED),
+                                onPressed: (value) {
+                                  Get.toNamed(MyRoutes.addItemScreen);
+                                },
+                                backgroundColor: const Color(0xFFFFF2ED),
                                 foregroundColor: AppTheme.orangeColor,
                                 icon: MyFlutterApp.edit,
                                 borderRadius: BorderRadius.circular(10),

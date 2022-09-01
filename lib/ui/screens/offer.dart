@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:woo_vendor/resources/theme/theme.dart';
 
 import '../widgets/custom_appbar.dart';
+import 'app_routes/app_routes.dart';
 
 class OfferScreen extends StatefulWidget {
   const OfferScreen({Key? key}) : super(key: key);
@@ -30,9 +31,17 @@ class _OfferScreenState extends State<OfferScreen> {
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(MediaQuery.of(context).size.height * .11),
-            child: const CustomAppbar(
+            child:  CustomAppbar(
               data: 'Offer',
-              leading: Icon(Icons.arrow_back_ios),
+              leading: InkWell(
+                  onTap: ()=> Get.toNamed(MyRoutes.profileScreen),
+                  child: const Icon(Icons.menu)),
+              actions: [Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: InkWell(
+                    onTap: ()=> Get.toNamed(MyRoutes.createOfferScreen),
+                    child: const Icon(Icons.add)),
+              ),],
             )),
         body: SingleChildScrollView(
           child: Padding(
@@ -63,9 +72,9 @@ class _OfferScreenState extends State<OfferScreen> {
                 ),
                 CarouselSlider(
                   options: CarouselOptions(
-                      viewportFraction: 1,
+                      viewportFraction: 1.2,
                       autoPlay: true,
-                      height: MediaQuery.of(context).size.height * .25,
+                      height: MediaQuery.of(context).size.height * .22,
                       onPageChanged: (value, value1) {
                         currentIndex.value = value;
                         // setState((){});
@@ -75,11 +84,12 @@ class _OfferScreenState extends State<OfferScreen> {
                       items.length,
                       (index) => Container(
                             height: MediaQuery.of(context).size.height * .13,
-                            width: MediaQuery.of(context).size.width,
+                            width: MediaQuery.of(context).size.width*.9,
                             decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.all(const Radius.circular(20)),
                                 image: DecorationImage(
                               image: NetworkImage(items[index].toString()),
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                             )),
                           )),
                 ),
@@ -121,7 +131,7 @@ class _OfferScreenState extends State<OfferScreen> {
                   child: Row(
                     children: [
                       Container(
-                        height: MediaQuery.of(context).size.height * .1,
+                        height: MediaQuery.of(context).size.height * .09,
                         width: MediaQuery.of(context).size.width * .2,
                         decoration: BoxDecoration(
                             border: Border.all(
@@ -206,7 +216,7 @@ class _OfferScreenState extends State<OfferScreen> {
                   child: Row(
                     children: [
                       Container(
-                        height: MediaQuery.of(context).size.height * .1,
+                        height: MediaQuery.of(context).size.height* .09,
                         width: MediaQuery.of(context).size.width * .2,
                         decoration: BoxDecoration(
                             border: Border.all(

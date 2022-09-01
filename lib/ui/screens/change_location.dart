@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:woo_vendor/ui/widgets/custom_text_field.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
+import 'app_routes/app_routes.dart';
 
 class ChangeLocationScreen extends StatefulWidget {
   const ChangeLocationScreen({Key? key}) : super(key: key);
@@ -40,9 +42,11 @@ class _ChangeLocationScreenState extends State<ChangeLocationScreen> {
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(MediaQuery.of(context).size.height * .11),
-            child: const CustomAppbar(
+            child:  CustomAppbar(
               data: 'LOGO',
-              leading: Icon(Icons.arrow_back_ios),
+              leading: InkWell(
+                  onTap: ()=>Get.toNamed(MyRoutes.restaurantLocationScreen),
+                  child: Icon(Icons.arrow_back_ios)),
             )),
         body: SingleChildScrollView(
           child: Padding(
@@ -123,7 +127,7 @@ class _ChangeLocationScreenState extends State<ChangeLocationScreen> {
                                 children: [
                                   const Text(
                                     "District",
-                                    style: const TextStyle(fontSize: 16),
+                                    style: TextStyle(fontSize: 16),
                                   ),
                                   const SizedBox(
                                     height: 5,
@@ -152,7 +156,7 @@ class _ChangeLocationScreenState extends State<ChangeLocationScreen> {
                                 children: [
                                   const Text(
                                     "Address",
-                                    style: const TextStyle(fontSize: 16),
+                                    style: TextStyle(fontSize: 16),
                                   ),
                                   const SizedBox(
                                     height: 5,
@@ -178,7 +182,9 @@ class _ChangeLocationScreenState extends State<ChangeLocationScreen> {
                           buttonText: "Confirm",
                           primaryColor: AppTheme.orangeColor,
                           buttonTextColor: AppTheme.whiteColor,
-                          onPress: () {},
+                          onPress: () {
+                            Get.toNamed(MyRoutes.bottomNavBarScreen);
+                          },
                         )
                       ],
                     ),

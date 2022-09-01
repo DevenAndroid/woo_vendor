@@ -1,3 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:woo_vendor/ui/widgets/custom_container.dart';
@@ -46,6 +51,51 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
         textValue = 'Switch Button is OFF';
       });
     }
+  }
+
+  FilePickerResult? uploadDocument;
+  String? uploadDocumentFileName;
+  PlatformFile? uploadDocumentPickedFile;
+  bool uploadDocumentLoading = false;
+  File? uploadDocumentDisplay;
+  String? sendingDocumentInAPI;
+
+   void uploadDocumentFunction() async {
+    try {
+      setState(() {
+        uploadDocumentLoading = true;
+      });
+      uploadDocument = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowMultiple: false,
+          allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'docx', 'doc']);
+      if (uploadDocument != null) {
+        uploadDocumentFileName = uploadDocument!.files.first.name;
+        uploadDocumentPickedFile = uploadDocument!.files.first;
+        uploadDocumentDisplay = File(uploadDocumentPickedFile!.path.toString());
+
+        List<int> uploadcertificateImage64 =
+            uploadDocumentDisplay!.readAsBytesSync();
+
+        sendingDocumentInAPI = base64Encode(uploadcertificateImage64);
+
+        print("Base 64 image===> $sendingDocumentInAPI");
+
+        if (kDebugMode) {
+          print("File name $uploadDocumentFileName");
+        }
+      }
+
+      setState(() {
+        uploadDocumentLoading = false;
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+
+
   }
 
   @override
@@ -229,15 +279,16 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            borderRadius: const BorderRadius.all(Radius.circular(20)),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.2),
                                 spreadRadius: 2,
                                 blurRadius: 4,
-                                offset:
-                                    const Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                           ),
@@ -327,7 +378,49 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                         //
                         //     ),
                         CustomContainer(
-                            child: Image.asset("assets/images/add.png")),
+                            child: InkWell(
+                                onTap: () {
+                                  uploadDocumentFunction();
+                                },
+                                child: uploadDocument == null
+                                    ? Image.asset("assets/images/add.png")
+                                    : Stack(children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: FileImage(
+                                                    uploadDocumentDisplay!,
+                                                  ),
+                                                  fit: BoxFit.fill)),
+                                        ),
+                                        Positioned(
+                                            top: 0,
+                                            left: 0,
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  uploadDocumentPickedFile =
+                                                      null;
+                                                  uploadDocumentDisplay = null;
+                                                  uploadDocument = null;
+                                                  print(uploadDocumentFileName);
+                                                });
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black
+                                                      .withOpacity(.6),
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                child: const Icon(
+                                                  Icons.clear,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            )),
+                                      ]))),
                         const SizedBox(
                           height: 20,
                         ),
@@ -343,7 +436,49 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                           height: 10,
                         ),
                         CustomContainer(
-                            child: Image.asset("assets/images/add.png")),
+                            child: InkWell(
+                                onTap: () {
+                                  uploadDocumentFunction();
+                                },
+                                child: uploadDocument == null
+                                    ? Image.asset("assets/images/add.png")
+                                    : Stack(children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: FileImage(
+                                              uploadDocumentDisplay!,
+                                            ),
+                                            fit: BoxFit.fill)),
+                                  ),
+                                  Positioned(
+                                      top: 0,
+                                      left: 0,
+                                      child: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            uploadDocumentPickedFile =
+                                            null;
+                                            uploadDocumentDisplay = null;
+                                            uploadDocument = null;
+                                            print(uploadDocumentFileName);
+                                          });
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.black
+                                                .withOpacity(.6),
+                                            shape: BoxShape.circle,
+                                          ),
+                                          padding:
+                                          const EdgeInsets.all(8),
+                                          child: const Icon(
+                                            Icons.clear,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      )),
+                                ]))),
 
                         const SizedBox(
                           height: 20,
@@ -362,14 +497,14 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                                 color: Colors.grey.withOpacity(0.2),
                                 spreadRadius: 2,
                                 blurRadius: 4,
-                                offset:
-                                    const Offset(0, 3), // changes position of shadow
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
                               ),
                             ],
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children:  [
+                            children: [
                               const Text(
                                 "WhatsApp for general update",
                                 style: TextStyle(
@@ -380,7 +515,6 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                                 value: isSwitched,
                                 onChanged: toggleSwitch,
                               ),
-
                             ],
                           ),
                         ),
@@ -388,14 +522,14 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                           height: 20,
                         ),
                         CustomButton(
-                          height: 40,
+                            height: 40,
                             width: 110,
                             primaryColor: AppTheme.orangeColor,
                             buttonTextColor: AppTheme.whiteColor,
-                            buttonText: "Continue", onPress:(){
+                            buttonText: "Continue",
+                            onPress: () {
                               Get.toNamed(MyRoutes.verificationScreen);
-                        }
-                        )
+                            })
                       ],
                     ),
                   ),

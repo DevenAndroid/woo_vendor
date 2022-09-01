@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
@@ -14,6 +13,8 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
+  RxBool order = true.obs;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +63,8 @@ class _OrderScreenState extends State<OrderScreen> {
                             ),
                             Expanded(
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Row(
                                     mainAxisAlignment:
@@ -182,7 +185,7 @@ class _OrderScreenState extends State<OrderScreen> {
                               primaryColor: AppTheme.orangeColor,
                               buttonTextColor: AppTheme.whiteColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20,
                             ),
                             CustomButton(
@@ -197,44 +200,108 @@ class _OrderScreenState extends State<OrderScreen> {
                     ),
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "All Order",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * .1,
-                            child: const Divider(
-                              thickness: 2,
-                              color: AppTheme.orangeColor,
+                  Obx(() {
+                    return SizedBox(
+                      child: order.value == true
+                          ? Row(
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () => order.value = true,
+                                      child: const Text(
+                                        "All Order",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    const SizedBox(
+                                      width: 30,
+                                      child: Divider(
+                                        height: 2,
+                                        thickness: 3,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    order.value = false;
+                                  },
+                                  child: const Text(
+                                    "Cancelled order ",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppTheme.textColor),
+                                  ),
+                                )
+                              ],
+                            )
+                          : Row(
+                              children: [
+                                InkWell(
+                                  onTap: () => order.value = true,
+                                  child: const Text(
+                                    "All Order",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppTheme.textColor),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        order.value = false;
+                                        print(order);
+                                      },
+                                      child: const Text(
+                                        "Cancelled order ",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    const SizedBox(
+                                      width: 30,
+                                      child: Divider(
+                                        height: 2,
+                                        thickness: 3,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Text(
-                        "Cancelled order ",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            color: AppTheme.textColor),
-                      )
-                    ],
-                  ),
+                    );
+                  }),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   Container(
                     margin: const EdgeInsets.only(bottom: 10),
@@ -386,7 +453,7 @@ class _OrderScreenState extends State<OrderScreen> {
                           spreadRadius: 2,
                           blurRadius: 4,
                           offset:
-                          const Offset(0, 3), // changes position of shadow
+                              const Offset(0, 3), // changes position of shadow
                         ),
                       ],
                     ),
@@ -416,12 +483,12 @@ class _OrderScreenState extends State<OrderScreen> {
                             children: [
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: const [
                                         Text(
                                           "Pizza",
@@ -458,11 +525,11 @@ class _OrderScreenState extends State<OrderScreen> {
                               ),
                               Container(
                                 height:
-                                MediaQuery.of(context).size.height * .05,
+                                    MediaQuery.of(context).size.height * .05,
                                 width: MediaQuery.of(context).size.width * .3,
                                 decoration: BoxDecoration(
                                   border:
-                                  Border.all(color: AppTheme.greenColor),
+                                      Border.all(color: AppTheme.greenColor),
                                   color: AppTheme.whiteColor,
                                   borderRadius: const BorderRadius.all(
                                     Radius.circular(10),

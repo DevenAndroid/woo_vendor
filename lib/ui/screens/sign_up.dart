@@ -226,8 +226,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               });
                             },
                             child: eyeHide == true
-                                ? const Icon(Icons.remove_red_eye_outlined)
-                                : const Icon(Icons.visibility_off_outlined)),
+                                ? const  Icon(Icons.visibility_off_outlined)
+                                : const Icon(Icons.remove_red_eye_outlined)
+                        ),
                         keyboardType: TextInputType.text,
                         validator:MultiValidator([
                           RequiredValidator(errorText: 'Enter a  password'),

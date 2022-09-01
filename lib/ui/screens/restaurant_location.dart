@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:woo_vendor/ui/widgets/custom_button.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
+import 'app_routes/app_routes.dart';
 
 class RestaurantLocationScreen extends StatefulWidget {
   const RestaurantLocationScreen({Key? key}) : super(key: key);
@@ -35,9 +37,11 @@ class _RestaurantLocationScreenState extends State<RestaurantLocationScreen> {
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(MediaQuery.of(context).size.height * .11),
-            child: const CustomAppbar(
+            child:  CustomAppbar(
               data: 'Restaurant Location',
-              leading: Icon(Icons.arrow_back_ios),
+              leading: InkWell(
+                onTap: ()=>Get.toNamed(MyRoutes.agreementPolicyScreen),
+                  child: Icon(Icons.arrow_back_ios)),
             )),
         body: SingleChildScrollView(
           child: Padding(
@@ -161,7 +165,9 @@ class _RestaurantLocationScreenState extends State<RestaurantLocationScreen> {
                           buttonText: "Confirm",
                           primaryColor: AppTheme.orangeColor,
                           buttonTextColor: AppTheme.whiteColor,
-                          onPress: () {},
+                          onPress: () {
+                            Get.toNamed(MyRoutes.changeLocationScreen);
+                          },
                         )
                       ],
                     ),

@@ -5,6 +5,7 @@ class Assets {
   static const String fontsLato-Regular = 'assets/fonts/Lato-Regular.ttf';
   static const String fontsLato-Semibold = 'assets/fonts/Lato-Semibold.ttf';
   static const String fontsMyFlutterApp = 'assets/fonts/MyFlutterApp.ttf';
+  static const String iconsCoin = 'assets/icons/coin.svg';
   static const String imagesAdd = 'assets/images/add.png';
   static const String imagesAgreementPolicy = 'assets/images/agreement_policy.png';
   static const String imagesBurger = 'assets/images/burger.png';

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18.889" height="18.889" viewBox="0 0 18.889 18.889">
+  <g id="coin" transform="translate(-1.4 -1.4)">
+    <path id="Path_9342" data-name="Path 9342" d="M8,10.918a1.214,1.214,0,0,0,1.177,1.239h1.328a1.057,1.057,0,0,0,1.027-1.08.936.936,0,0,0-.7-1.027L8.708,9.307A.934.934,0,0,1,8,8.28,1.057,1.057,0,0,1,9.027,7.2h1.328a1.221,1.221,0,0,1,1.186,1.239" transform="translate(-0.688 -0.596)" fill="none" stroke="#f07846" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+    <path id="Path_9343" data-name="Path 9343" d="M10,12.85v.655" transform="translate(-0.917 -1.244)" fill="none" stroke="#f07846" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+    <path id="Path_9344" data-name="Path 9344" d="M10,6.41V7.1" transform="translate(-0.917 -0.506)" fill="none" stroke="#f07846" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+    <path id="Path_9345" data-name="Path 9345" d="M9.074,16.148A7.074,7.074,0,1,0,2,9.074,7.074,7.074,0,0,0,9.074,16.148Z" fill="none" stroke="#f07846" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+    <path id="Path_9346" data-name="Path 9346" d="M12.98,19.091A4.384,4.384,0,1,0,19.115,13" transform="translate(-1.259 -1.261)" fill="none" stroke="#f07846" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+  </g>
+</svg>

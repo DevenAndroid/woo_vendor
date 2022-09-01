@@ -1,5 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:woo_vendor/ui/screens/app_routes/app_routes.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
@@ -28,9 +30,11 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(MediaQuery.of(context).size.height * .11),
-            child: const CustomAppbar(
-              data: 'Offer',
-              leading: Icon(Icons.arrow_back_ios),
+            child: CustomAppbar(
+              data: 'Create Offer',
+              leading: InkWell(
+                  onTap: ()=> Get.toNamed(MyRoutes.offerScreen),
+                  child: const Icon(Icons.arrow_back_ios)),
             )),
         body: SingleChildScrollView(
           child: Padding(
@@ -84,8 +88,8 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                   ),
                   child: DottedBorder(
                       borderType: BorderType.RRect,
-                      radius: Radius.circular(20),
-                      dashPattern: [10, 10],
+                      radius: const Radius.circular(20),
+                      dashPattern: const [10, 10],
                       color: const Color(0xffC5C5C5),
                       strokeWidth: 2,
                       child: Container(
@@ -140,8 +144,8 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                   ),
                   child: DottedBorder(
                       borderType: BorderType.RRect,
-                      radius: Radius.circular(20),
-                      dashPattern: [10, 10],
+                      radius: const Radius.circular(20),
+                      dashPattern: const [10, 10],
                       color: const Color(0xffC5C5C5),
                       strokeWidth: 2,
                       child: Container(
@@ -177,7 +181,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                   height: 20,
                 ),
                 Row(
-                  children: [
+                  children: const [
                     Text("Discount",
                         style: TextStyle(
                           fontSize: 16,
@@ -196,7 +200,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                   height: 20,
                 ),
                 Row(
-                  children: [
+                  children: const [
                     Text("Description",
                         style: TextStyle(
                           fontSize: 16,
@@ -263,7 +267,11 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                   buttonText: "Create ",
                   buttonTextColor: AppTheme.whiteColor,
                   primaryColor: AppTheme.orangeColor,
-                  onPress: () {},
+                  onPress: () {
+                    Get.toNamed(MyRoutes.offerScreen);
+
+
+                  },
                 )
 
               ],

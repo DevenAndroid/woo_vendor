@@ -34,7 +34,7 @@ class _AgreementPolicyScreenState extends State<AgreementPolicyScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text("Agreement Policy Screen",
+                const Text("Partnership Agreement Policy",
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(
@@ -104,7 +104,7 @@ class _AgreementPolicyScreenState extends State<AgreementPolicyScreen> {
                     width: 110,
                     buttonText: " Continue ",
                     onPress: () {
-                      Get.toNamed(MyRoutes.bottomNavBarScreen);
+                      Get.toNamed(MyRoutes.restaurantLocationScreen);
                     },
                   ),
                 ),

@@ -21,9 +21,11 @@ class _FoodLicenceScreenState extends State<FoodLicenceScreen> {
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(MediaQuery.of(context).size.height * .11),
-            child: const CustomAppbar(
+            child:  CustomAppbar(
               data: 'Food Licence',
-              leading: Icon(Icons.arrow_back_ios),
+              leading: InkWell(
+                  onTap: ()=> Get.toNamed(MyRoutes.profileScreen),
+                  child: Icon(Icons.arrow_back_ios)),
             )),
         body: SingleChildScrollView(
           child: Padding(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:woo_vendor/ui/widgets/custom_text_field.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_appbar.dart';
 import '../widgets/custom_button.dart';
+import 'app_routes/app_routes.dart';
 
 class AddItemScreen extends StatefulWidget {
   const AddItemScreen({Key? key}) : super(key: key);
@@ -23,9 +25,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(MediaQuery.of(context).size.height * .11),
-            child: const CustomAppbar(
+            child:  CustomAppbar(
               data: 'Add Item',
-              leading: Icon(Icons.arrow_back_ios),
+              leading: InkWell(
+                  onTap: ()=>Get.toNamed(MyRoutes.menuScreen),
+                  child: Icon(Icons.arrow_back_ios)),
             )),
         body: SingleChildScrollView(
           child: Padding(
@@ -169,8 +173,11 @@ class _AddItemScreenState extends State<AddItemScreen> {
                     buttonText: "Add",
                     buttonTextColor: AppTheme.whiteColor,
                     primaryColor: AppTheme.orangeColor,
-                    onPress: () {},
+                    onPress: () =>Get.toNamed(MyRoutes.bottomNavBarScreen),
                   )
+
+
+
                 ],
               )),
         ));

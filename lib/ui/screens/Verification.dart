@@ -215,7 +215,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   Row(
                                     children: const [
                                       Text(
-                                        "Expire date of FSSAI",
+                                        "FSSAI  No",
                                         style: TextStyle(fontSize: 12),
                                       )
                                     ],
@@ -225,9 +225,9 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   ),
                                   CustomTextField(
                                     controller: _numberController,
-                                    hintText: "DD/MM/YYYY",
+                                    hintText: "000",
                                     prefixChildIcon: const Icon(
-                                      Icons.calendar_month_outlined,
+                                      Icons.keyboard_outlined,
                                       color: AppTheme.orangeColor,
                                     ),
                                   ),

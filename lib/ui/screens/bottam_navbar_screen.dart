@@ -19,7 +19,7 @@ class _BottomNavBarScreenState extends State<BottomNavBarScreen> {
 
   final pages = [
     const HomeScreen(),
-    const ProfileScreen(),
+    const MenuScreen(),
     const OrderScreen(),
     const OfferScreen(),
   ];

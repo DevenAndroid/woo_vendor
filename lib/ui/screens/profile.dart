@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:woo_vendor/ui/widgets/custom_text_field.dart';
 
@@ -295,7 +296,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     right: BorderSide(
                                         color: Colors.grey.shade300)),
                               ),
-                              child: Image.asset("assets/images/gst.png"),
+                              child: SvgPicture.asset("assets/icons/coin.svg")
                             ),
                             const SizedBox(
                               width: 5,

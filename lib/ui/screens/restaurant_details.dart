@@ -26,9 +26,11 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(MediaQuery.of(context).size.height * .11),
-            child: const CustomAppbar(
+            child: CustomAppbar(
               data: 'Restaurant Detail',
-              leading: Icon(Icons.arrow_back_ios),
+              leading: InkWell(
+                onTap: ()=> Get.toNamed(MyRoutes.profileScreen),
+                  child: Icon(Icons.arrow_back_ios)),
             )),
         body: SingleChildScrollView(
           child: Padding(

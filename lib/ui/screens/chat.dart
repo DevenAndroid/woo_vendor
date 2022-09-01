@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:woo_vendor/ui/screens/app_routes/app_routes.dart';
 
 import '../../resources/theme/theme.dart';
 
@@ -33,10 +34,10 @@ class _ChatScreenState extends State<ChatScreen> {
               statusBarBrightness: Brightness.light, // For iOS (dark icons)
             ),
             backgroundColor: AppTheme.orangeColor,
-            leading: GestureDetector(
+            leading: InkWell(
               child: const Icon(Icons.arrow_back_ios),
               onTap: () {
-                // Get.to((const GoToPickUpScreen()));
+                Get.toNamed(MyRoutes.bottomNavBarScreen);
               },
             ),
             title: Row(

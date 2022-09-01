@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:woo_vendor/resources/theme/theme.dart';
+import 'package:woo_vendor/ui/screens/app_routes/app_routes.dart';
 
 import '../widgets/custom_appbar.dart';
 
@@ -17,9 +19,11 @@ class _NotificationScreenState extends State<NotificationScreen> {
         appBar: PreferredSize(
             preferredSize:
                 Size.fromHeight(MediaQuery.of(context).size.height * .11),
-            child: const CustomAppbar(
+            child:  CustomAppbar(
               data: 'Notification',
-              leading: Icon(Icons.arrow_back_ios),
+              leading: InkWell(
+                onTap: ()=> Get.toNamed(MyRoutes.bottomNavBarScreen),
+                  child: Icon(Icons.arrow_back_ios)),
             )),
         body: SingleChildScrollView(
           child: Padding(
