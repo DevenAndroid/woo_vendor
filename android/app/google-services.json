@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "859159855289",
+    "project_id": "woo-vendor",
+    "storage_bucket": "woo-vendor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859159855289:android:253f5d631e9ef497e11b68",
+        "android_client_info": {
+          "package_name": "com.woo_vendor.woo_vendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859159855289-9hvbumntp17qqpcis2edjgdafle3gnim.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.woo_vendor.woo_vendor",
+            "certificate_hash": "bfa708e211d74ae327a2278871b44723500474a4"
+          }
+        },
+        {
+          "client_id": "859159855289-menjg9m506rn9epsgecviejqoktnnkla.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5ZPzSYAKvkb6tRrjHEF7bMWbwC63-h14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "859159855289-menjg9m506rn9epsgecviejqoktnnkla.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

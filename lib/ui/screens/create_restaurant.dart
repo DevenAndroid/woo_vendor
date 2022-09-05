@@ -22,6 +22,36 @@ class CreateRestaurantScreen extends StatefulWidget {
 }
 
 class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
+  List<MultipleImages> documents = [
+    MultipleImages(
+      titleName: "Restaurant type",
+        sendingDocumentInAPI: "",
+        uploadDocumentFileName: "",
+        uploadDocumentLoading: false,
+        uploadDocument: null,
+        uploadDocumentDisplay: null,
+        uploadDocumentPickedFile: null),
+    MultipleImages(
+      titleName: "Food Image",
+      sendingDocumentInAPI: "",
+      uploadDocumentFileName: "",
+      uploadDocumentLoading: false,
+    ),
+
+  ];
+
+  FilePickerResult? uploadDocument;
+  String? uploadDocumentFileName;
+  PlatformFile? uploadDocumentPickedFile;
+  bool uploadDocumentLoading = false;
+  File? uploadDocumentDisplay;
+  String? sendingDocumentInAPI;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   final _nameController = TextEditingController();
@@ -55,33 +85,31 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
     }
   }
 
-  FilePickerResult? uploadDocument;
-  String? uploadDocumentFileName;
-  PlatformFile? uploadDocumentPickedFile;
-  bool uploadDocumentLoading = false;
-  File? uploadDocumentDisplay;
-  String? sendingDocumentInAPI;
 
-  void uploadDocumentFunction() async {
+  void commonUploadDocumentFunction1(index) async {
     try {
       setState(() {
-        uploadDocumentLoading = true;
+        documents[index].uploadDocumentLoading = true;
       });
-      uploadDocument = await FilePicker.platform.pickFiles(
+      documents[index].uploadDocument = await FilePicker.platform.pickFiles(
           type: FileType.custom,
           allowMultiple: false,
           allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'docx', 'doc']);
-      if (uploadDocument != null) {
-        uploadDocumentFileName = uploadDocument!.files.first.name;
-        uploadDocumentPickedFile = uploadDocument!.files.first;
-        uploadDocumentDisplay = File(uploadDocumentPickedFile!.path.toString());
+      if (documents[index].uploadDocument != null) {
+        documents[index].uploadDocumentFileName =
+            documents[index].uploadDocument!.files.first.name;
+        documents[index].uploadDocumentPickedFile =
+            documents[index].uploadDocument!.files.first;
+        documents[index].uploadDocumentDisplay =
+            File(documents[index].uploadDocumentPickedFile!.path.toString());
 
         List<int> uploadcertificateImage64 =
-            uploadDocumentDisplay!.readAsBytesSync();
+            documents[index].uploadDocumentDisplay!.readAsBytesSync();
 
-        sendingDocumentInAPI = base64Encode(uploadcertificateImage64);
+        documents[index].sendingDocumentInAPI =
+            base64Encode(uploadcertificateImage64);
 
-        print("Base 64 image===> $sendingDocumentInAPI");
+        print("Base 64 image===> ${documents[index].sendingDocumentInAPI}");
 
         if (kDebugMode) {
           print("File name $uploadDocumentFileName");
@@ -89,51 +117,7 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
       }
 
       setState(() {
-        uploadDocumentLoading = false;
-      });
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
-  }
-
-  FilePickerResult? uploadDocument1;
-  String? uploadDocumentFileName1;
-  PlatformFile? uploadDocumentPickedFile1;
-  bool uploadDocumentLoading1 = false;
-  File? uploadDocumentDisplay1;
-  String? sendingDocumentInAPI1;
-
-  void uploadDocumentFunction1() async {
-    try {
-      setState(() {
-        uploadDocumentLoading1 = true;
-      });
-      uploadDocument1 = await FilePicker.platform.pickFiles(
-          type: FileType.custom,
-          allowMultiple: false,
-          allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'docx', 'doc']);
-      if (uploadDocument1 != null) {
-        uploadDocumentFileName1 = uploadDocument1!.files.first.name;
-        uploadDocumentPickedFile1 = uploadDocument1!.files.first;
-        uploadDocumentDisplay1 =
-            File(uploadDocumentPickedFile1!.path.toString());
-
-        List<int> uploadcertificateImage64 =
-            uploadDocumentDisplay1!.readAsBytesSync();
-
-        sendingDocumentInAPI1 = base64Encode(uploadcertificateImage64);
-
-        print("Base 64 image===> $sendingDocumentInAPI1");
-
-        if (kDebugMode) {
-          print("File name $uploadDocumentFileName1");
-        }
-      }
-
-      setState(() {
-        uploadDocumentLoading1 = false;
+        documents[index].uploadDocumentLoading = false;
       });
     } catch (e) {
       if (kDebugMode) {
@@ -171,7 +155,7 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height*.16,
+              top: MediaQuery.of(context).size.height * .16,
               bottom: 0,
               right: 0,
               left: 0,
@@ -233,7 +217,8 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                           keyboardType: TextInputType.text,
                           validator: MultiValidator([
                             RequiredValidator(errorText: 'Enter a name'),
-                            MinLengthValidator(3, errorText:" Minimum length is 3")
+                            MinLengthValidator(3,
+                                errorText: " Minimum length is 3")
                           ]),
                         ),
                         const SizedBox(
@@ -246,7 +231,6 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                             Icons.location_on_outlined,
                             color: AppTheme.orangeColor,
                           ),
-
                           validator: MultiValidator([
                             RequiredValidator(errorText: 'Enter a address'),
                           ]),
@@ -413,149 +397,137 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                         const SizedBox(
                           height: 20,
                         ),
-
-                        Row(
-                          children: const [
-                            Text(
-                              "Restaurant Type",
-                              style: TextStyle(fontSize: 18),
+                        Column(
+                          children: List.generate(documents.length, (index) =>
+                              Column(
+                                children: [
+                            Row(
+                              children: [
+                                Text(
+                                  documents[index].titleName.toString(),
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        // Container(
-                        //
-                        //   height: MediaQuery.of(context).size.height*.2,
-                        //     width: MediaQuery.of(context).size.width ,
-                        //     padding: const EdgeInsets.all(10),
-                        //     decoration: BoxDecoration(
-                        //         color: AppTheme.whiteColor,
-                        //         borderRadius: BorderRadius.all(Radius.circular(20)
-                        //         ,),
-                        //       boxShadow: [
-                        //         BoxShadow(
-                        //           color: Colors.grey.withOpacity(0.2),
-                        //           spreadRadius: 2,
-                        //           blurRadius: 4,
-                        //           offset:
-                        //           Offset(0, 3), // changes position of shadow
-                        //         ),
-                        //       ],
-                        //
-                        //     ),
-                        //
-                        //   child: Image.asset("assets/images/add.png"),
-                        //
-                        //     ),
-                        CustomContainer(
-                            child: InkWell(
-                                onTap: () {
-                                  uploadDocumentFunction();
-                                },
-                                child: uploadDocument == null
-                                    ? Image.asset("assets/images/add.png")
-                                    : Stack(children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: FileImage(
-                                                    uploadDocumentDisplay!,
-                                                  ),
-                                                  fit: BoxFit.contain)),
-                                        ),
-                                        Positioned(
-                                            top: 0,
-                                            left: 0,
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  uploadDocumentPickedFile =
-                                                      null;
-                                                  uploadDocumentDisplay = null;
-                                                  uploadDocument = null;
-                                                  print(uploadDocumentFileName);
-                                                });
-                                              },
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black
-                                                      .withOpacity(.6),
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                padding:
-                                                    const EdgeInsets.all(8),
-                                                child: const Icon(
-                                                  Icons.clear,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            )),
-                                      ]))),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          children: const [
-                            Text(
-                              "Food Image",
-                              style: TextStyle(fontSize: 18),
+                            const SizedBox(
+                              height: 10,
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CustomContainer(
-                            child: InkWell(
-                                onTap: () {
-                                  uploadDocumentFunction1();
-                                },
-                                child: uploadDocument1 == null
-                                    ? Image.asset("assets/images/add.png")
-                                    : Stack(children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: FileImage(
-                                                    uploadDocumentDisplay1!,
-                                                  ),
-                                                  fit: BoxFit.contain)),
-                                        ),
-                                        Positioned(
-                                            top: 0,
-                                            left: 0,
-                                            child: InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  uploadDocumentPickedFile1 =
-                                                      null;
-                                                  uploadDocumentDisplay1 = null;
-                                                  uploadDocument1 = null;
-                                                  print(
-                                                      uploadDocumentFileName1);
-                                                });
-                                              },
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black
-                                                      .withOpacity(.6),
-                                                  shape: BoxShape.circle,
+                            CustomContainer(
+                                child: InkWell(
+                                    onTap: () {
+                                      commonUploadDocumentFunction1(index);
+                                    },
+                                    child: documents[index].uploadDocument == null
+                                        ? Image.asset("assets/images/add.png")
+                                        : Stack(children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: FileImage(
+                                                  documents[index]
+                                                      .uploadDocumentDisplay!,
                                                 ),
-                                                padding:
-                                                    const EdgeInsets.all(8),
-                                                child: const Icon(
-                                                  Icons.clear,
-                                                  color: Colors.white,
-                                                ),
+                                                fit: BoxFit.contain)),
+                                      ),
+                                      Positioned(
+                                          top: 0,
+                                          left: 0,
+                                          child: InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                documents[index]
+                                                    .uploadDocumentPickedFile =
+                                                null;
+                                                documents[index]
+                                                    .uploadDocumentDisplay =
+                                                null;
+                                                documents[index].uploadDocument =
+                                                null;
+                                                print(documents[index]
+                                                    .uploadDocumentFileName);
+                                              });
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.black
+                                                    .withOpacity(.6),
+                                                shape: BoxShape.circle,
                                               ),
-                                            )),
-                                      ]))),
-
-                        const SizedBox(
-                          height: 20,
+                                              padding:
+                                              const EdgeInsets.all(8),
+                                              child: const Icon(
+                                                Icons.clear,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          )),
+                                    ]))),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                                ],
+                              )),
                         ),
+                        // Row(
+                        //   children: const [
+                        //     Text(
+                        //       "Food Image",
+                        //       style: TextStyle(fontSize: 18),
+                        //     ),
+                        //   ],
+                        // ),
+                        // const SizedBox(
+                        //   height: 10,
+                        // ),
+                        // CustomContainer(
+                        //     child: InkWell(
+                        //         onTap: () {
+                        //           uploadDocumentFunction1();
+                        //         },
+                        //         child: uploadDocument1 == null
+                        //             ? Image.asset("assets/images/add.png")
+                        //             : Stack(children: [
+                        //                 Container(
+                        //                   decoration: BoxDecoration(
+                        //                       image: DecorationImage(
+                        //                           image: FileImage(
+                        //                             uploadDocumentDisplay1!,
+                        //                           ),
+                        //                           fit: BoxFit.contain)),
+                        //                 ),
+                        //                 Positioned(
+                        //                     top: 0,
+                        //                     left: 0,
+                        //                     child: InkWell(
+                        //                       onTap: () {
+                        //                         setState(() {
+                        //                           uploadDocumentPickedFile1 =
+                        //                               null;
+                        //                           uploadDocumentDisplay1 = null;
+                        //                           uploadDocument1 = null;
+                        //                           print(
+                        //                               uploadDocumentFileName1);
+                        //                         });
+                        //                       },
+                        //                       child: Container(
+                        //                         decoration: BoxDecoration(
+                        //                           color: Colors.black
+                        //                               .withOpacity(.6),
+                        //                           shape: BoxShape.circle,
+                        //                         ),
+                        //                         padding:
+                        //                             const EdgeInsets.all(8),
+                        //                         child: const Icon(
+                        //                           Icons.clear,
+                        //                           color: Colors.white,
+                        //                         ),
+                        //                       ),
+                        //                     )),
+                        //               ]))),
+                        //
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
                         Container(
                           height: MediaQuery.of(context).size.height * .06,
                           width: MediaQuery.of(context).size.width,
@@ -602,7 +574,8 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                           buttonText: "Continue",
                           onPress: () {
                             if (_formKey.currentState!.validate() &&
-                                uploadDocument != null &&  uploadDocument1 != null) {
+                                uploadDocument != null &&
+                                uploadDocument != null) {
                               ScaffoldMessenger.of(context)
                                   .hideCurrentSnackBar();
                               Get.toNamed(MyRoutes.verificationScreen);
@@ -616,7 +589,8 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
 
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                    content: Text('Enter all the fields and documents')),
+                                    content: Text(
+                                        'Enter all the fields and documents')),
                               );
                             }
                           },
@@ -636,3 +610,29 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
     );
   }
 }
+
+class MultipleImages {
+  FilePickerResult? uploadDocument;
+  String? uploadDocumentFileName;
+  String? titleName;
+  PlatformFile? uploadDocumentPickedFile;
+  bool? uploadDocumentLoading;
+  File? uploadDocumentDisplay;
+  String? sendingDocumentInAPI;
+
+  MultipleImages(
+      {this.uploadDocument,
+      this.uploadDocumentFileName,
+      this.titleName,
+      this.uploadDocumentPickedFile,
+      this.uploadDocumentLoading = false,
+      this.uploadDocumentDisplay,
+      this.sendingDocumentInAPI});
+}
+
+// FilePickerResult? uploadDocument;
+// String? uploadDocumentFileName;
+// PlatformFile? uploadDocumentPickedFile;
+// bool uploadDocumentLoading = false;
+// File? uploadDocumentDisplay;
+// String? sendingDocumentInAPI;
