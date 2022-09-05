@@ -53,7 +53,7 @@ class MyRoutes {
   static const String bottomNavBarScreen = "/bottomNavBarScreen";
 
   static var routes = [
-    GetPage(name: "/", page: () => const  CreateRestaurantScreen()),
+    GetPage(name: "/", page: () => const  SplashScreen()),
     GetPage(name: loginScreen, page: () => const LogInScreen()),
     GetPage(name: getOTPScreen, page: () => const OtpScreen()),
     GetPage(name: signUpScreen, page: () => const SignUpScreen()),

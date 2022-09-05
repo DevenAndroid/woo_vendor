@@ -21,6 +21,9 @@ class _LogInScreenState extends State<LogInScreen> {
   final _numberController = TextEditingController();
   final _idController = TextEditingController();
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +53,7 @@ class _LogInScreenState extends State<LogInScreen> {
             ),
           ),
           Positioned(
-            top: 140,
+            top: MediaQuery.of(context).size.height*.16,
             bottom: 0,
             right: 0,
             left: 0,
@@ -175,10 +178,10 @@ class _LogInScreenState extends State<LogInScreen> {
                         hintText: "Enter your restaurant ID",
                         keyboardType: TextInputType.number,
                         validator: MultiValidator([
-                          RequiredValidator(errorText: 'Enter a number'),
+                          RequiredValidator(errorText: 'Enter a id'),
                           MinLengthValidator(4,
                               errorText: 'Minimum 4 numbers required'),
-                          MaxLengthValidator(15,
+                          MaxLengthValidator(10,
                               errorText: 'Maximum numbers length is 15')
                         ]),
                       ),
@@ -273,7 +276,7 @@ class _LogInScreenState extends State<LogInScreen> {
                           const SizedBox(
                             height: 45,
                           ),
-                          GestureDetector(
+                          InkWell(
                             onTap: () {
                               Get.toNamed(MyRoutes.signUpScreen);
                             },

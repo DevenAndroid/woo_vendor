@@ -49,7 +49,6 @@ class _RestaurantLocationScreenState extends State<RestaurantLocationScreen> {
               child: Column(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * .7,
                     width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(

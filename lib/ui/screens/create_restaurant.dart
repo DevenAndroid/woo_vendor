@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:woo_vendor/ui/widgets/custom_container.dart';
 import 'package:woo_vendor/ui/widgets/custom_text_field.dart';
@@ -60,7 +62,7 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
   File? uploadDocumentDisplay;
   String? sendingDocumentInAPI;
 
-   void  uploadDocumentFunction() async {
+  void uploadDocumentFunction() async {
     try {
       setState(() {
         uploadDocumentLoading = true;
@@ -94,8 +96,50 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
         print(e);
       }
     }
+  }
 
+  FilePickerResult? uploadDocument1;
+  String? uploadDocumentFileName1;
+  PlatformFile? uploadDocumentPickedFile1;
+  bool uploadDocumentLoading1 = false;
+  File? uploadDocumentDisplay1;
+  String? sendingDocumentInAPI1;
 
+  void uploadDocumentFunction1() async {
+    try {
+      setState(() {
+        uploadDocumentLoading1 = true;
+      });
+      uploadDocument1 = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowMultiple: false,
+          allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'docx', 'doc']);
+      if (uploadDocument1 != null) {
+        uploadDocumentFileName1 = uploadDocument1!.files.first.name;
+        uploadDocumentPickedFile1 = uploadDocument1!.files.first;
+        uploadDocumentDisplay1 =
+            File(uploadDocumentPickedFile1!.path.toString());
+
+        List<int> uploadcertificateImage64 =
+            uploadDocumentDisplay1!.readAsBytesSync();
+
+        sendingDocumentInAPI1 = base64Encode(uploadcertificateImage64);
+
+        print("Base 64 image===> $sendingDocumentInAPI1");
+
+        if (kDebugMode) {
+          print("File name $uploadDocumentFileName1");
+        }
+      }
+
+      setState(() {
+        uploadDocumentLoading1 = false;
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
   }
 
   @override
@@ -127,7 +171,7 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
               ),
             ),
             Positioned(
-              top: 140,
+              top: MediaQuery.of(context).size.height*.16,
               bottom: 0,
               right: 0,
               left: 0,
@@ -181,33 +225,53 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                         ),
                         CustomTextField(
                           controller: _nameController,
-                          labelText: "Restaurant name",
+                          hintText: "Restaurant name",
                           prefixChildIcon: const Icon(
                             Icons.restaurant_menu_sharp,
                             color: AppTheme.orangeColor,
                           ),
+                          keyboardType: TextInputType.text,
+                          validator: MultiValidator([
+                            RequiredValidator(errorText: 'Enter a name'),
+                            MinLengthValidator(3, errorText:" Minimum length is 3")
+                          ]),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
                         CustomTextField(
                           controller: _addressController,
-                          labelText: "Restaurant address",
+                          hintText: "Restaurant address",
                           prefixChildIcon: const Icon(
                             Icons.location_on_outlined,
                             color: AppTheme.orangeColor,
                           ),
+
+                          validator: MultiValidator([
+                            RequiredValidator(errorText: 'Enter a address'),
+                          ]),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
                         CustomTextField(
                           controller: _numberController,
-                          labelText: "Phone number",
+                          hintText: "Phone number",
                           prefixChildIcon: const Icon(
                             Icons.phone,
                             color: AppTheme.orangeColor,
                           ),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          keyboardType: TextInputType.number,
+                          validator: MultiValidator([
+                            RequiredValidator(errorText: 'Enter a number'),
+                            MinLengthValidator(10,
+                                errorText: 'Minimum 10 numbers required'),
+                            MaxLengthValidator(15,
+                                errorText: 'Maximum numbers length is 15')
+                          ]),
                         ),
                         const SizedBox(
                           height: 5,
@@ -243,22 +307,30 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                               width: MediaQuery.of(context).size.width * .4,
                               child: CustomTextField(
                                 controller: _openTimeController,
-                                labelText: "Open time",
+                                hintText: "Open time",
                                 prefixChildIcon: const Icon(
                                   Icons.phone,
                                   color: AppTheme.orangeColor,
                                 ),
+                                keyboardType: TextInputType.datetime,
+                                validator: MultiValidator([
+                                  RequiredValidator(errorText: 'Enter time'),
+                                ]),
                               ),
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width * .4,
                               child: CustomTextField(
                                 controller: _closeTimeController,
-                                labelText: "Closed time",
+                                hintText: "Closed time",
                                 prefixChildIcon: const Icon(
                                   Icons.phone,
                                   color: AppTheme.orangeColor,
                                 ),
+                                keyboardType: TextInputType.datetime,
+                                validator: MultiValidator([
+                                  RequiredValidator(errorText: 'Enter time'),
+                                ]),
                               ),
                             ),
                           ],
@@ -297,7 +369,7 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                             // Initial Value
                             validator: (value) {
                               if (value == null) {
-                                return 'Please select Job type';
+                                return 'Please select type';
                               }
                             },
                             decoration: InputDecoration(
@@ -391,7 +463,7 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                                                   image: FileImage(
                                                     uploadDocumentDisplay!,
                                                   ),
-                                                  fit: BoxFit.fill)),
+                                                  fit: BoxFit.contain)),
                                         ),
                                         Positioned(
                                             top: 0,
@@ -438,47 +510,48 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                         CustomContainer(
                             child: InkWell(
                                 onTap: () {
-                                  uploadDocumentFunction();
+                                  uploadDocumentFunction1();
                                 },
-                                child: uploadDocument == null
+                                child: uploadDocument1 == null
                                     ? Image.asset("assets/images/add.png")
                                     : Stack(children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                            image: FileImage(
-                                              uploadDocumentDisplay!,
-                                            ),
-                                            fit: BoxFit.fill)),
-                                  ),
-                                  Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            uploadDocumentPickedFile =
-                                            null;
-                                            uploadDocumentDisplay = null;
-                                            uploadDocument = null;
-                                            print(uploadDocumentFileName);
-                                          });
-                                        },
-                                        child: Container(
+                                        Container(
                                           decoration: BoxDecoration(
-                                            color: Colors.black
-                                                .withOpacity(.6),
-                                            shape: BoxShape.circle,
-                                          ),
-                                          padding:
-                                          const EdgeInsets.all(8),
-                                          child: const Icon(
-                                            Icons.clear,
-                                            color: Colors.white,
-                                          ),
+                                              image: DecorationImage(
+                                                  image: FileImage(
+                                                    uploadDocumentDisplay1!,
+                                                  ),
+                                                  fit: BoxFit.contain)),
                                         ),
-                                      )),
-                                ]))),
+                                        Positioned(
+                                            top: 0,
+                                            left: 0,
+                                            child: InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  uploadDocumentPickedFile1 =
+                                                      null;
+                                                  uploadDocumentDisplay1 = null;
+                                                  uploadDocument1 = null;
+                                                  print(
+                                                      uploadDocumentFileName1);
+                                                });
+                                              },
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black
+                                                      .withOpacity(.6),
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                child: const Icon(
+                                                  Icons.clear,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            )),
+                                      ]))),
 
                         const SizedBox(
                           height: 20,
@@ -522,14 +595,35 @@ class _CreateRestaurantScreenState extends State<CreateRestaurantScreen> {
                           height: 20,
                         ),
                         CustomButton(
-                            height: 40,
-                            width: 110,
-                            primaryColor: AppTheme.orangeColor,
-                            buttonTextColor: AppTheme.whiteColor,
-                            buttonText: "Continue",
-                            onPress: () {
+                          height: 40,
+                          width: 110,
+                          primaryColor: AppTheme.orangeColor,
+                          buttonTextColor: AppTheme.whiteColor,
+                          buttonText: "Continue",
+                          onPress: () {
+                            if (_formKey.currentState!.validate() &&
+                                uploadDocument != null &&  uploadDocument1 != null) {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
                               Get.toNamed(MyRoutes.verificationScreen);
-                            })
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Processing Data')),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Enter all the fields and documents')),
+                              );
+                            }
+                          },
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        )
                       ],
                     ),
                   ),

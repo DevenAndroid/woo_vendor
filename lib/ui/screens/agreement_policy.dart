@@ -107,7 +107,11 @@ class _AgreementPolicyScreenState extends State<AgreementPolicyScreen> {
                       Get.toNamed(MyRoutes.restaurantLocationScreen);
                     },
                   ),
+
                 ),
+                const SizedBox(
+                  height: 30,
+                )
               ],
             ),
           ),

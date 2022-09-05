@@ -2,8 +2,6 @@
 class Assets {
   Assets._();
 
-  static const String fontsLato-Regular = 'assets/fonts/Lato-Regular.ttf';
-  static const String fontsLato-Semibold = 'assets/fonts/Lato-Semibold.ttf';
   static const String fontsMyFlutterApp = 'assets/fonts/MyFlutterApp.ttf';
   static const String iconsCoin = 'assets/icons/coin.svg';
   static const String imagesAdd = 'assets/images/add.png';
@@ -17,6 +15,7 @@ class Assets {
   static const String imagesEdit = 'assets/images/edit.png';
   static const String imagesEdit2 = 'assets/images/edit2.png';
   static const String imagesFb = 'assets/images/fb.png';
+  static const String imagesFood = 'assets/images/food.png';
   static const String imagesGoogle = 'assets/images/google.png';
   static const String imagesGst = 'assets/images/gst.png';
   static const String imagesHistoryDark = 'assets/images/history_dark.png';

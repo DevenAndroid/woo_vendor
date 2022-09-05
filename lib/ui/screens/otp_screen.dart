@@ -46,7 +46,7 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
             ),
             Positioned(
-              top: 140,
+              top: MediaQuery.of(context).size.height*.16,
               bottom: 0,
               right: 0,
               left: 0,

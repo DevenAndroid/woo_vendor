@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Positioned(
-              top: 95,
+              top: MediaQuery.of(context).size.height*.115,
               child: Container(
                 width: MediaQuery.of(context).size.width * .8,
                 margin: EdgeInsets.symmetric(
@@ -919,7 +919,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 15,
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * .12,
+                    height: 95,
                     child: ListView.builder(
                         shrinkWrap: true,
                         physics: const AlwaysScrollableScrollPhysics(),
@@ -950,8 +950,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Row(
                               children: [
                                 Container(
-                                  height:
-                                      MediaQuery.of(context).size.height * .1,
+                                  height:95,
                                   width: MediaQuery.of(context).size.width * .2,
                                   decoration: BoxDecoration(
                                       border: Border.all(

@@ -1,4 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:woo_vendor/ui/screens/app_routes/app_routes.dart';
 import 'package:woo_vendor/ui/widgets/custom_button.dart';
@@ -22,6 +29,93 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
   final _dateController = TextEditingController();
   final _numberController = TextEditingController();
+
+  FilePickerResult? uploadDocument;
+  String? uploadDocumentFileName;
+  PlatformFile? uploadDocumentPickedFile;
+  bool uploadDocumentLoading = false;
+  File? uploadDocumentDisplay;
+  String? sendingDocumentInAPI;
+
+  void uploadDocumentFunction() async {
+    try {
+      setState(() {
+        uploadDocumentLoading = true;
+      });
+      uploadDocument = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowMultiple: false,
+          allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'docx', 'doc']);
+      if (uploadDocument != null) {
+        uploadDocumentFileName = uploadDocument!.files.first.name;
+        uploadDocumentPickedFile = uploadDocument!.files.first;
+        uploadDocumentDisplay = File(uploadDocumentPickedFile!.path.toString());
+
+        List<int> uploadcertificateImage64 =
+            uploadDocumentDisplay!.readAsBytesSync();
+
+        sendingDocumentInAPI = base64Encode(uploadcertificateImage64);
+
+        print("Base 64 image===> $sendingDocumentInAPI");
+
+        if (kDebugMode) {
+          print("File name $uploadDocumentFileName");
+        }
+      }
+
+      setState(() {
+        uploadDocumentLoading = false;
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
+
+  FilePickerResult? uploadDocument1;
+  String? uploadDocumentFileName1;
+  PlatformFile? uploadDocumentPickedFile1;
+  bool uploadDocumentLoading1 = false;
+  File? uploadDocumentDisplay1;
+  String? sendingDocumentInAPI1;
+
+  void uploadDocumentFunction1() async {
+    try {
+      setState(() {
+        uploadDocumentLoading1 = true;
+      });
+      uploadDocument1 = await FilePicker.platform.pickFiles(
+          type: FileType.custom,
+          allowMultiple: false,
+          allowedExtensions: ['jpg', 'jpeg', 'png', 'pdf', 'docx', 'doc']);
+      if (uploadDocument1 != null) {
+        uploadDocumentFileName1 = uploadDocument1!.files.first.name;
+        uploadDocumentPickedFile1 = uploadDocument1!.files.first;
+        uploadDocumentDisplay1 =
+            File(uploadDocumentPickedFile1!.path.toString());
+
+        List<int> uploadcertificateImage64 =
+            uploadDocumentDisplay1!.readAsBytesSync();
+
+        sendingDocumentInAPI1 = base64Encode(uploadcertificateImage64);
+
+        print("Base 64 image===> $sendingDocumentInAPI1");
+
+        if (kDebugMode) {
+          print("File name $uploadDocumentFileName1");
+        }
+      }
+
+      setState(() {
+        uploadDocumentLoading1 = false;
+      });
+    } catch (e) {
+      if (kDebugMode) {
+        print(e);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +146,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               ),
             ),
             Positioned(
-              top: 140,
+              top: MediaQuery.of(context).size.height*.16,
               bottom: 0,
               right: 0,
               left: 0,
@@ -143,7 +237,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                   horizontal: -4, vertical: -4),
                               // contentPadding : EdgeInsetsGeometry  ,
                               title: const Text("Yes ! have a license"),
-                              value: "Yes",
+                              value: "yes",
                               groupValue: radioValue,
                               onChanged: (value) {
                                 setState(() {
@@ -208,6 +302,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                       Icons.calendar_month_outlined,
                                       color: AppTheme.orangeColor,
                                     ),
+                                    keyboardType: TextInputType.datetime,
+                                    validator: MultiValidator([
+                                      RequiredValidator(
+                                          errorText: 'Enter date'),
+                                      DateValidator("dd/MM/yyyy",
+                                          errorText: " Enter date")
+                                    ]),
                                   ),
                                   const SizedBox(
                                     height: 15,
@@ -230,6 +331,20 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                       Icons.keyboard_outlined,
                                       color: AppTheme.orangeColor,
                                     ),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ],
+                                    keyboardType: TextInputType.number,
+                                    validator: MultiValidator([
+                                      RequiredValidator(
+                                          errorText: "Enter FSSAI Number"),
+                                      MinLengthValidator(6,
+                                          errorText:
+                                              'Minimum 6 numbers required'),
+                                      MaxLengthValidator(15,
+                                          errorText:
+                                              'Maximum numbers length is 15')
+                                    ]),
                                   ),
                                 ],
                               ),
@@ -328,8 +443,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               dense: true,
                               visualDensity: const VisualDensity(
                                   horizontal: -4, vertical: -4),
-                              title: const Text("Passport"),
-                              value: "Passport",
+                              title: const Text("Pan card"),
+                              value: "pancard",
                               groupValue: radioValue2,
                               onChanged: (value) {
                                 setState(() {
@@ -341,10 +456,55 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               height: 10,
                             ),
                             CustomContainer(
-                              child: Image.asset("assets/images/add.png"),
-                              border: Border.all(
-                                  color: AppTheme.textColor.withOpacity(0.50)),
-                            ),const SizedBox(
+                                border: Border.all(
+                                    color:
+                                        AppTheme.textColor.withOpacity(0.50)),
+                                child: InkWell(
+                                    onTap: () {
+                                      uploadDocumentFunction();
+                                    },
+                                    child: uploadDocument == null
+                                        ? Image.asset("assets/images/add.png")
+                                        : Stack(children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: FileImage(
+                                                        uploadDocumentDisplay!,
+                                                      ),
+                                                      fit: BoxFit.contain)),
+                                            ),
+                                            Positioned(
+                                                top: 0,
+                                                left: 0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      uploadDocumentPickedFile =
+                                                          null;
+                                                      uploadDocumentDisplay =
+                                                          null;
+                                                      uploadDocument1 = null;
+                                                      print(
+                                                          uploadDocumentFileName);
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.black
+                                                          .withOpacity(.6),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    padding:
+                                                        const EdgeInsets.all(8),
+                                                    child: const Icon(
+                                                      Icons.clear,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                )),
+                                          ]))),
+                            const SizedBox(
                               height: 20,
                             ),
                             Row(
@@ -352,14 +512,60 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 Text(
                                   "GST Certification ",
                                   style: TextStyle(
-                                      fontSize: 16, fontWeight: FontWeight.w500),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
                                 )
                               ],
                             ),
                             const SizedBox(
                               height: 10,
                             ),
-                            CustomContainer(child: Image.asset("assets/images/add.png")),
+                            CustomContainer(
+                                child: InkWell(
+                                    onTap: () {
+                                      uploadDocumentFunction1();
+                                    },
+                                    child: uploadDocument1 == null
+                                        ? Image.asset("assets/images/add.png")
+                                        : Stack(children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  image: DecorationImage(
+                                                      image: FileImage(
+                                                        uploadDocumentDisplay1!,
+                                                      ),
+                                                      fit: BoxFit.contain)),
+                                            ),
+                                            Positioned(
+                                                top: 0,
+                                                left: 0,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      uploadDocumentPickedFile1 =
+                                                          null;
+                                                      uploadDocumentDisplay1 =
+                                                          null;
+                                                      uploadDocument1 = null;
+                                                      print(
+                                                          uploadDocumentFileName1);
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.black
+                                                          .withOpacity(.6),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    padding:
+                                                        const EdgeInsets.all(8),
+                                                    child: const Icon(
+                                                      Icons.clear,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                )),
+                                          ]))),
                             const SizedBox(
                               height: 20,
                             ),
@@ -369,9 +575,30 @@ class _VerificationScreenState extends State<VerificationScreen> {
                               primaryColor: AppTheme.orangeColor,
                               buttonTextColor: AppTheme.whiteColor,
                               buttonText: "Submit",
-                              onPress: (){
-                                Get.toNamed(MyRoutes.agreementPolicyScreen);
+                              onPress: () {
+                                if (_formKey.currentState!.validate() &&
+                                    uploadDocument != null &&
+                                    uploadDocument1 != null) {
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  Get.toNamed(MyRoutes.agreementPolicyScreen);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Processing Data')),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text('Enter all the fields and documents')),
+                                  );
+                                }
                               },
+                            ),
+                            const SizedBox(
+                              height: 30,
                             )
                           ]),
                         ),

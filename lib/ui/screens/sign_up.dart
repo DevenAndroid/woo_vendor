@@ -53,7 +53,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           Positioned(
-            top: 140,
+            top: MediaQuery.of(context).size.height*.16,
             bottom: 0,
             right: 0,
             left: 0,
@@ -150,13 +150,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
 
                       CustomTextField(
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+
                         controller: _numberController,
                         hintText: "Enter your number",
                         prefixChildIcon: const Icon(
                           Icons.phone,
                           color: AppTheme.orangeColor,
                         ),
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                         keyboardType: TextInputType.number,
                         validator: MultiValidator([
                           RequiredValidator(errorText: 'Enter a number'),
@@ -194,7 +195,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Icons.mail_outline,
                           color: AppTheme.orangeColor,
                         ),
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.emailAddress,
                         validator: MultiValidator([
                           RequiredValidator(errorText: 'Enter a Email'),
                           EmailValidator(errorText: 'Enter a valid Email'),

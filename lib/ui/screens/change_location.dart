@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:woo_vendor/ui/widgets/custom_text_field.dart';
@@ -36,6 +37,8 @@ class _ChangeLocationScreenState extends State<ChangeLocationScreen> {
   final _DistrictController = TextEditingController();
   final _addressController = TextEditingController();
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,151 +49,170 @@ class _ChangeLocationScreenState extends State<ChangeLocationScreen> {
               data: 'LOGO',
               leading: InkWell(
                   onTap: ()=>Get.toNamed(MyRoutes.restaurantLocationScreen),
-                  child: Icon(Icons.arrow_back_ios)),
+                  child: const Icon(Icons.arrow_back_ios)),
             )),
-        body: SingleChildScrollView(
-          child: Padding(
-              padding: const EdgeInsets.all(14.0),
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height * .72,
-                    width: MediaQuery.of(context).size.width,
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: AppTheme.whiteColor,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(10),
+        body: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: AppTheme.whiteColor,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 4,
+                            offset:
+                                const Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 4,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          constraints: BoxConstraints(
-                            minWidth: MediaQuery.of(context).size.width,
-                            maxWidth: MediaQuery.of(context).size.width,
-                            maxHeight: MediaQuery.of(context).size.height * .4,
-                            minHeight: MediaQuery.of(context).size.height * .4,
+                      child: Column(
+                        children: [
+                          Container(
+                            constraints: BoxConstraints(
+                              minWidth: MediaQuery.of(context).size.width,
+                              maxWidth: MediaQuery.of(context).size.width,
+                              maxHeight: MediaQuery.of(context).size.height * .4,
+                              minHeight: MediaQuery.of(context).size.height * .4,
+                            ),
+                            child: GoogleMap(
+                              myLocationEnabled: true,
+                              myLocationButtonEnabled: true,
+                              mapType: MapType.normal,
+                              initialCameraPosition: _kGooglePlex,
+                              onMapCreated: (GoogleMapController controller) {
+                                _controller.complete(controller);
+                              },
+                            ),
                           ),
-                          child: GoogleMap(
-                            myLocationEnabled: true,
-                            myLocationButtonEnabled: true,
-                            mapType: MapType.normal,
-                            initialCameraPosition: _kGooglePlex,
-                            onMapCreated: (GoogleMapController controller) {
-                              _controller.complete(controller);
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "City",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    CustomTextField(
+                                      validator: MultiValidator([
+                                        RequiredValidator(errorText: 'Enter a city'),
+                                        MinLengthValidator(3, errorText: "Minimum length is 3"),
+                                      ]),
+                                      controller: _cityController,
+                                      prefixChildIcon: const Icon(
+                                        Icons.location_on_outlined,
+                                        color: AppTheme.orangeColor,
+                                      ),
+                                      hintText: "Select",
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "District",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    CustomTextField(
+                                      validator: MultiValidator([
+                                        RequiredValidator(errorText: 'Enter a district'),
+                                        MinLengthValidator(3, errorText: "Minimum length is 3"),
+                                      ]),
+                                      controller: _DistrictController,
+                                      prefixChildIcon: const Icon(
+                                        Icons.location_on_outlined,
+                                        color: AppTheme.orangeColor,
+                                      ),
+                                      hintText: "District",
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Address",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    CustomTextField(
+                                      validator: MultiValidator([
+                                        RequiredValidator(errorText: 'Enter address'),
+                                        MinLengthValidator(3, errorText: "Minimum length is 3"),
+                                      ]),
+                                      controller: _addressController,
+                                      prefixChildIcon: const Icon(
+                                        Icons.location_on_outlined,
+                                        color: AppTheme.orangeColor,
+                                      ),
+                                      hintText: "Write here",
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          CustomButton(
+                            width: 150,
+                            buttonText: "Confirm",
+                            primaryColor: AppTheme.orangeColor,
+                            buttonTextColor: AppTheme.whiteColor,
+                            onPress: () {
+                              if (_formKey.currentState!.validate()) {
+                                Get.toNamed(MyRoutes.bottomNavBarScreen);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Processing Data')),
+                                );
+                              }
                             },
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "City",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  CustomTextField(
-                                    controller: _cityController,
-                                    prefixChildIcon: const Icon(
-                                      Icons.location_on_outlined,
-                                      color: AppTheme.orangeColor,
-                                    ),
-                                    hintText: "Select",
-                                  )
-                                ],
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "District",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  CustomTextField(
-                                    controller: _DistrictController,
-                                    prefixChildIcon: const Icon(
-                                      Icons.location_on_outlined,
-                                      color: AppTheme.orangeColor,
-                                    ),
-                                    hintText: "District",
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "Address",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  CustomTextField(
-                                    controller: _addressController,
-                                    prefixChildIcon: const Icon(
-                                      Icons.location_on_outlined,
-                                      color: AppTheme.orangeColor,
-                                    ),
-                                    hintText: "Write here",
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        CustomButton(
-                          width: 150,
-                          buttonText: "Confirm",
-                          primaryColor: AppTheme.orangeColor,
-                          buttonTextColor: AppTheme.whiteColor,
-                          onPress: () {
-                            Get.toNamed(MyRoutes.bottomNavBarScreen);
-                          },
-                        )
-                      ],
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              )),
+                  ],
+                )),
+          ),
         ));
   }
 }
