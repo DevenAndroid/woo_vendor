@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_button.dart';
@@ -24,6 +26,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _numberController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  late String userEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*.16,
+            top: MediaQuery.of(context).size.height * .16,
             bottom: 0,
             right: 0,
             left: 0,
@@ -106,12 +110,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: const [
                           Text(
                             'Sign up',
-                            style: TextStyle( fontSize: 13,fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 13, fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                           ),
                           Text(
                             '  to get started.',
-                            style: TextStyle(color: AppTheme.textColor, fontSize: 13,),
+                            style: TextStyle(
+                              color: AppTheme.textColor,
+                              fontSize: 13,
+                            ),
                           ),
                         ],
                       ),
@@ -119,13 +127,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 30,
                       ),
                       Row(
-                        children: const [Text("User Name",style: TextStyle(fontSize: 16,),)],
+                        children: const [
+                          Text(
+                            "User Name",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          )
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-
-
                       CustomTextField(
                         controller: _nameController,
                         hintText: "Enter your name",
@@ -136,36 +149,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         keyboardType: TextInputType.text,
                         validator: MultiValidator([
                           RequiredValidator(errorText: 'Enter a  name'),
-                          MinLengthValidator(3, errorText: "Minimum length is 3"),
+                          MinLengthValidator(3,
+                              errorText: "Minimum length is 3"),
                         ]),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Row(
-                        children: const [Text("Mobile Number",style: TextStyle(fontSize: 16,),)],
+                        children: const [
+                          Text(
+                            "Mobile Number",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          )
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-
                       CustomTextField(
-
                         controller: _numberController,
                         hintText: "Enter your number",
                         prefixChildIcon: const Icon(
                           Icons.phone,
                           color: AppTheme.orangeColor,
                         ),
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         keyboardType: TextInputType.number,
                         validator: MultiValidator([
                           RequiredValidator(errorText: 'Enter a number'),
-                          MinLengthValidator(10, errorText: 'Minimum 10 numbers required'),
-                          MaxLengthValidator(15, errorText: 'Maximum numbers length is 15')
+                          MinLengthValidator(10,
+                              errorText: 'Minimum 10 numbers required'),
+                          MaxLengthValidator(15,
+                              errorText: 'Maximum numbers length is 15')
                         ]),
                       ),
-
                       const SizedBox(
                         height: 10,
                       ),
@@ -182,12 +204,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 20,
                       ),
                       Row(
-                        children: const [Text("Email ID",style: TextStyle(fontSize: 16,),)],
+                        children: const [
+                          Text(
+                            "Email ID",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          )
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-
                       CustomTextField(
                         controller: _emailController,
                         hintText: "Enter your Email",
@@ -199,19 +227,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         validator: MultiValidator([
                           RequiredValidator(errorText: 'Enter a Email'),
                           EmailValidator(errorText: 'Enter a valid Email'),
-
                         ]),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Row(
-                        children: const [Text("Password",style: TextStyle(fontSize: 16,),)],
+                        children: const [
+                          Text(
+                            "Password",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                          )
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-
                       CustomTextField(
                         obscureText: eyeHide,
                         controller: _passwordController,
@@ -227,13 +260,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               });
                             },
                             child: eyeHide == true
-                                ? const  Icon(Icons.visibility_off_outlined)
-                                : const Icon(Icons.remove_red_eye_outlined)
-                        ),
+                                ? const Icon(Icons.visibility_off_outlined)
+                                : const Icon(Icons.remove_red_eye_outlined)),
                         keyboardType: TextInputType.text,
-                        validator:MultiValidator([
+                        validator: MultiValidator([
                           RequiredValidator(errorText: 'Enter a  password'),
-                          MinLengthValidator(8, errorText: "Minimum length is 8")
+                          MinLengthValidator(8,
+                              errorText: "Minimum length is 8")
                         ]),
                       ),
                       const SizedBox(
@@ -242,7 +275,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       const SizedBox(
                         height: 30,
                       ),
-
                       CustomButton(
                         height: 40,
                         width: 120,
@@ -258,7 +290,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }
                         },
                       ),
-
                       const SizedBox(
                         height: 25,
                       ),
@@ -295,22 +326,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.rectangle,
+                          InkWell(
+                            onTap: () async {
+                              FirebaseAuth.instance.signOut();
+                              userEmail = "";
+                              await GoogleSignIn().signOut();
+                              setState(() {});
+                            },
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                              ),
+                              child: Image.asset("assets/images/fb.png",
+                                  fit: BoxFit.cover),
                             ),
-                            child: Image.asset("assets/images/fb.png",
-                                fit: BoxFit.cover),
                           ),
                           const SizedBox(
-                            width: 50,
+                            width: 40,
                           ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.rectangle,
+                          InkWell(
+                            onTap: () async {
+                              signInWithGoogle();
+                              print(userEmail);
+                            },
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                              ),
+                              child: Image.asset("assets/images/google.png",
+                                  fit: BoxFit.cover),
                             ),
-                            child: Image.asset("assets/images/google.png",
-                                fit: BoxFit.cover),
                           ),
                         ],
                       ),
@@ -345,5 +390,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ]),
       ),
     );
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    userEmail = googleUser!.email;
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

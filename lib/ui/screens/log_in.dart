@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../resources/theme/theme.dart';
 import '../widgets/custom_button.dart';
@@ -21,8 +23,7 @@ class _LogInScreenState extends State<LogInScreen> {
   final _numberController = TextEditingController();
   final _idController = TextEditingController();
 
-
-
+  late String userEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +54,7 @@ class _LogInScreenState extends State<LogInScreen> {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).size.height*.16,
+            top: MediaQuery.of(context).size.height * .16,
             bottom: 0,
             right: 0,
             left: 0,
@@ -123,7 +124,12 @@ class _LogInScreenState extends State<LogInScreen> {
                         height: 30,
                       ),
                       Row(
-                        children: const [Text("Mobile Number",style: TextStyle(fontSize: 18),)],
+                        children: const [
+                          Text(
+                            "Mobile Number",
+                            style: TextStyle(fontSize: 18),
+                          )
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
@@ -164,7 +170,12 @@ class _LogInScreenState extends State<LogInScreen> {
                         height: 10,
                       ),
                       Row(
-                        children: const [Text("Restaurant ID",style: TextStyle(fontSize: 18),)],
+                        children: const [
+                          Text(
+                            "Restaurant ID",
+                            style: TextStyle(fontSize: 18),
+                          )
+                        ],
                       ),
                       const SizedBox(
                         height: 10,
@@ -192,8 +203,8 @@ class _LogInScreenState extends State<LogInScreen> {
                         height: 30,
                       ),
                       CustomButton(
-                        height: 40,
-                        width: 100,
+                          height: 40,
+                          width: 100,
                           primaryColor: AppTheme.orangeColor,
                           buttonTextColor: AppTheme.whiteColor,
                           buttonText: "Got OTP",
@@ -244,22 +255,36 @@ class _LogInScreenState extends State<LogInScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.rectangle,
+                          InkWell(
+                            onTap: () async {
+                              FirebaseAuth.instance.signOut();
+                              userEmail = "";
+                              await GoogleSignIn().signOut();
+                              setState(() {});
+                            },
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                              ),
+                              child: Image.asset("assets/images/fb.png",
+                                  fit: BoxFit.cover),
                             ),
-                            child: Image.asset("assets/images/fb.png",
-                                fit: BoxFit.cover),
                           ),
                           const SizedBox(
-                            width: 50,
+                            width: 40,
                           ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.rectangle,
+                          InkWell(
+                            onTap: () async {
+                              signInWithGoogle();
+                              print(userEmail);
+                            },
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.rectangle,
+                              ),
+                              child: Image.asset("assets/images/google.png",
+                                  fit: BoxFit.cover),
                             ),
-                            child: Image.asset("assets/images/google.png",
-                                fit: BoxFit.cover),
                           ),
                         ],
                       ),
@@ -299,5 +324,25 @@ class _LogInScreenState extends State<LogInScreen> {
         ]),
       ),
     );
+  }
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    userEmail = googleUser!.email;
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }
